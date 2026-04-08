@@ -1,0 +1,11 @@
+.left-nav div,
+.right div {
+  margin: 0.5rem;
+}
+.Navbar {
+  display: flex;
+  background-color: #1e3a8a;
+}
+.left-nav {
+  margin-left: 70px;
+}
