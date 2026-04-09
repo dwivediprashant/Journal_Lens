@@ -1,0 +1,8 @@
+.search {
+  /* background-color: #6b7280; */
+  padding: 1rem;
+  color: black;
+  outline: hidden;
+  border: 0.5px solid #6b7280;
+  border-radius: 1rem;
+}

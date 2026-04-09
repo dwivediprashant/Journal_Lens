@@ -1,5 +1,7 @@
 import Card from "../Card/Card";
+import PublisherCard from "../publishers-card/PublisherCard";
 import "./Hero.css";
+import { Link } from "react-router";
 
 export default function Hero() {
   return (
@@ -19,8 +21,8 @@ export default function Hero() {
             maxime architecto, qui saepe, officiis laudantium? Officia natus
             labore, ipsam ut tempore optio? Eligendi.
           </p>
-          <button className=" text-white p-3 rounded-xl m-5">
-            Explore journals
+          <button className="hero-btn text-white p-3 rounded-xl m-5">
+            <Link to="/journals">Explore Journals</Link>
           </button>
         </div>
         <div className="right mr-5 flex place-items-center">
@@ -32,7 +34,7 @@ export default function Hero() {
         </div>
       </div>
       <div className="flex p-5 justify-around">
-        <Card
+        {/* <Card
           title="Potentials Magazine"
           desc="desc-1"
           headerColor="bg-green-300"
@@ -52,7 +54,8 @@ export default function Hero() {
           headerColor="bg-blue-400"
           bodyColor="bg-blue-200"
           src={`https://biblioteca.cuc.edu.co/wp-content/uploads/2022/09/49.png`}
-        />
+        /> */}
+        <PublisherCard />
       </div>
     </div>
   );
