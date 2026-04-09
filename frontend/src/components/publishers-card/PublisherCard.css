@@ -1,7 +1,12 @@
+.round-card-wrapper {
+  display: flex;
+  justify-content: center;
+}
 .round-card-container {
   display: flex;
-
+  justify-content: start;
   flex-wrap: wrap;
+  width: 70%;
 }
 .header {
   padding: 1rem;

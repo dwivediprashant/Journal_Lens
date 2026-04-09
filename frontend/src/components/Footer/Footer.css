@@ -1,0 +1,47 @@
+.main-wrapper {
+  display: flex;
+  justify-content: space-between;
+
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  max-width: 300px;
+  flex-wrap: wrap;
+  color: #111827;
+  padding: 0 1rem 0 1rem;
+  letter-spacing: 1.5px;
+}
+a:hover i {
+  transition: 0.25s;
+  color: #3b82f6;
+}
+i {
+  font-size: xx-large;
+}
+.brand h2 {
+  white-space: nowrap;
+}
+
+.sources-bottom {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #7dd3fc;
+}
+
+.sources-list {
+  list-style: square;
+  padding-left: 1.25rem;
+  color: #111827;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.5rem 1.5rem;
+}
+
+.sources-list li a {
+  color: #111827;
+}
+.footer-logo img {
+  max-width: 300px;
+  min-width: 100px;
+}

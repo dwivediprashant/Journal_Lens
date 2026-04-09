@@ -6,20 +6,17 @@ import { Link } from "react-router";
 export default function Hero() {
   return (
     <div>
-      <div className="flex justify-between m-5">
+      <div className="hero flex justify-between m-5">
         <div className="left m-5 p-5">
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
-            sunt autem asperiores exercitationem cum cumque, ducimus maxime
-            architecto, qui saepe, officiis laudantium? Officia natus labore,
-            ipsam ut tempore optio? Eligendi.Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Voluptatum sunt autem asperiores
-            exercitationem cum cumque, ducimus maxime architecto, qui saepe,
-            officiis laudantium? Officia natus labore, ipsam ut tempore optio?
-            Eligendi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Voluptatum sunt autem asperiores exercitationem cum cumque, ducimus
-            maxime architecto, qui saepe, officiis laudantium? Officia natus
-            labore, ipsam ut tempore optio? Eligendi.
+            This project provides a unified platform for students to search and
+            access research papers and journals from multiple scholarly sources
+            such as IEEE, CORE, DOAJ, and arXiv. It allows users to filter
+            content based on domains like AI/ML, Civil, and Mechanical
+            Engineering, making it easier to discover relevant academic
+            resources in one place. A centralized platform to search and explore
+            research papers and journals from multiple academic sources with
+            domain-based filtering.
           </p>
           <button className="hero-btn text-white p-3 rounded-xl m-5">
             <Link to="/journals">Explore Journals</Link>
