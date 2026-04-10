@@ -1,6 +1,6 @@
 import "./Card.css";
-
-export default function Card({ desc, src }) {
+import { Link } from "react-router";
+export default function Card({ id, desc, src }) {
   return (
     <div className="card text-black rounded-lg overflow-hidden ">
       <div className="p-2">
@@ -14,8 +14,11 @@ export default function Card({ desc, src }) {
           </span>
         </div>
         <div className="btn-container-card">
-          <button className="text-white p-2">See details</button>
-          <button className="text-white p-2">Go to website</button>
+          <button className="text-white p-2">
+            <Link to={`/journals/${id}`}>See details</Link>
+          </button>
+
+          {/* <button className="text-white p-2">Go to website</button> */}
         </div>
       </div>
     </div>
