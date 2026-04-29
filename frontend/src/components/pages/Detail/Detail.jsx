@@ -1,6 +1,11 @@
 import "./Detail.css";
+import React, { useState } from "react";
 import DetailCard from "../../researchCard_withGPT/DetailCard";
+import ChatBot from "../../ChatBot/ChatBot";
+
 export default function Detail() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   return (
     <div className="journal-details m-5 ">
       <div className="detail-img">
@@ -22,19 +27,20 @@ export default function Detail() {
         <h4 className="text-3xl m-3 ">ALL research papers</h4>
         <div className="detailcard-main">
           <div className="detailcard-container">
-            <DetailCard tag={`IEEE `} title={"AIML technologies"} />
-            <DetailCard tag={`Springer `} title={"AIML technologies"} />
-            <DetailCard tag={`DOAJ `} title={"Civil engineer technologies"} />
-            <DetailCard tag={`MDPI `} title={"Mechanicl technologies"} />
-            <DetailCard tag={`MDPI `} title={"AIML technologies"} />
-            <DetailCard tag={`MDPI `} title={"AIML technologies"} />
-            <DetailCard tag={`MDPI `} title={"AIML technologies"} />
-            <DetailCard tag={`MDPI `} title={"AIML technologies"} />
-            <DetailCard tag={`MDPI `} title={"AIML technologies"} />
-            <DetailCard tag={`MDPI `} title={"AIML technologies"} />
+            <DetailCard tag={`IEEE `} title={"AIML technologies"} onOpenChat={() => setIsChatOpen(true)} />
+            <DetailCard tag={`Springer `} title={"AIML technologies"} onOpenChat={() => setIsChatOpen(true)} />
+            <DetailCard tag={`DOAJ `} title={"Civil engineer technologies"} onOpenChat={() => setIsChatOpen(true)} />
+            <DetailCard tag={`MDPI `} title={"Mechanicl technologies"} onOpenChat={() => setIsChatOpen(true)} />
+            <DetailCard tag={`MDPI `} title={"AIML technologies"} onOpenChat={() => setIsChatOpen(true)} />
+            <DetailCard tag={`MDPI `} title={"AIML technologies"} onOpenChat={() => setIsChatOpen(true)} />
+            <DetailCard tag={`MDPI `} title={"AIML technologies"} onOpenChat={() => setIsChatOpen(true)} />
+            <DetailCard tag={`MDPI `} title={"AIML technologies"} onOpenChat={() => setIsChatOpen(true)} />
+            <DetailCard tag={`MDPI `} title={"AIML technologies"} onOpenChat={() => setIsChatOpen(true)} />
+            <DetailCard tag={`MDPI `} title={"AIML technologies"} onOpenChat={() => setIsChatOpen(true)} />
           </div>
         </div>
       </div>
+      <ChatBot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </div>
   );
 }
