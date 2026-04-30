@@ -66,7 +66,7 @@ export default function Footer() {
           <div>
             <div>
               <h3 className="  mb-3 text-blue-700">Connect</h3>
-              <div className="flex space-x-4">
+              <div className="social-media flex space-x-4">
                 <a href="#">
                   <i className="fa-brands fa-square-x-twitter"></i>
                 </a>

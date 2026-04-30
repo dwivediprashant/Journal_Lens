@@ -1,4 +1,5 @@
 .detail-card-btn button {
+  cursor: pointer;
   background-color: black;
   padding: 0.6rem 0.9rem;
   color: white;
@@ -8,18 +9,21 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 .detail-card-btn .fa-robot {
-  size: 2px;
-}
-button:hover {
-  background-color: blue;
+  font-size: large;
 }
 .detail-card-btn {
   margin-top: auto;
   display: flex;
+  justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
+  /* background-color: green; */
+  width: 100%;
 }
-
+.detail-card-btn button:hover {
+  opacity: 0.8;
+  transition: 0.25s;
+}
 .detail-card-wrapper {
   width: 100%;
   max-width: none;

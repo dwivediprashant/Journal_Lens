@@ -2,22 +2,27 @@ import "./Detail.css";
 import React, { useState } from "react";
 import DetailCard from "../../researchCard_withGPT/DetailCard";
 import ChatBot from "../../ChatBot/ChatBot";
-import VortexLoader from "../../loaders/Vortex";
 import apiClient from "../../../configs/apiClient";
 import { useSearchParams } from "react-router";
+import MagnifyGlassLoader from "../../loaders/MagnifyGlassLoader";
 
 export default function Detail() {
+  //hook
   const [searchParams] = useSearchParams();
   const field = searchParams.get("field");
   const desc = searchParams.get("desc");
   const [isChatOpen, setIsChatOpen] = useState(false);
-
   const [isShowBtn, setisShowBtn] = useState(true);
   const [loader, setLoader] = useState(false);
   const [data, setData] = useState([]);
+  const [metaData, setMetaData] = useState({});
+  const [pageNum, setPageNum] = useState(1);
+  const totalPages = metaData?.per_page
+    ? Math.ceil(metaData.count / metaData.per_page)
+    : 1;
 
-  const handleisShowBtnClick = async (e) => {
-    e.preventDefault();
+  //research api call
+  const callResearchApi = async (pageNum) => {
     setLoader(true);
     try {
       const res = await apiClient({
@@ -25,10 +30,27 @@ export default function Detail() {
         url: "/researchpapers",
         params: {
           field: field,
+          pageNum: pageNum,
         },
       });
-      setData(res.data.data);
-      console.log(res.data.data);
+
+      return res;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    } finally {
+      setLoader(false);
+    }
+  };
+
+  //show-button click handling
+  const handleisShowBtnClick = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await callResearchApi(pageNum);
+      setData(res?.data?.data?.results);
+      setMetaData(res?.data?.data?.meta);
+      // console.log(res.data.data);
       setisShowBtn(false);
     } catch (error) {
       console.log(error);
@@ -37,6 +59,38 @@ export default function Detail() {
     }
   };
 
+  //next button click
+  const handleNextBtnClick = async () => {
+    try {
+      const nextPage = pageNum + 1;
+      setPageNum(nextPage);
+      const res = await callResearchApi(nextPage);
+      setData(res?.data?.data?.results);
+      setMetaData(res?.data?.data?.meta);
+      // console.log(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //prev button click
+  const handlePrevBtnClick = async () => {
+    try {
+      if (pageNum === 1) {
+        return;
+      }
+      const prevPage = pageNum - 1;
+      setPageNum(prevPage);
+      const res = await callResearchApi(prevPage);
+      setData(res?.data?.data?.results);
+      setMetaData(res?.data?.data?.meta);
+      // console.log(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //render
   return (
     <div className="journal-details m-5 ">
       <div className="top-details">
@@ -52,14 +106,16 @@ export default function Detail() {
           <span className=" text-3xl text-gray-700 font-bold">" </span>
         </div>
       </div>
-      <span className="detail-list-title text-3xl m-3">
-        <span className="text-blue-700">{field}'s</span> research papers
-      </span>
+      <div className="detail-list-title text-3xl m-3">
+        <div>
+          <span className="text-blue-700">{field}'s</span> research papers
+        </div>
+      </div>
       <div className="list">
         {isShowBtn ? (
           <div className="detail-list-cta">
             {loader ? (
-              <VortexLoader />
+              <MagnifyGlassLoader />
             ) : (
               <button
                 className="detail-list-button text-white rounded-lg"
@@ -72,15 +128,39 @@ export default function Detail() {
         ) : (
           <>
             <div className="detailcard-main">
-              <div className="detailcard-container">
-                {data.map((paper, index) => (
-                  <DetailCard
-                    key={paper?.id ?? index}
-                    paper={paper}
-                    onOpenChat={() => setIsChatOpen(true)}
-                  />
-                ))}
-              </div>
+              {!isShowBtn && (
+                <div className="pagination-btn ms-auto">
+                  <button
+                    className={`prev-btn ${pageNum === 1 ? "disabled" : ""}`}
+                    disabled={pageNum === 1 || loader}
+                    onClick={handlePrevBtnClick}
+                  >
+                    <i className="fa-solid fa-chevron-left"></i> prev
+                  </button>
+                  <button
+                    className={`next-btn ${pageNum >= totalPages ? "disabled" : ""}`}
+                    onClick={handleNextBtnClick}
+                    disabled={pageNum >= totalPages || loader}
+                  >
+                    next <i className="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+              )}
+              {loader ? (
+                <div className="loader-container">
+                  <MagnifyGlassLoader />
+                </div>
+              ) : (
+                <div className="detailcard-container">
+                  {data.map((paper, index) => (
+                    <DetailCard
+                      key={paper?.id ?? index}
+                      paper={paper}
+                      onOpenChat={() => setIsChatOpen(true)}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </>
         )}

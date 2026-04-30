@@ -71,7 +71,7 @@ export default function DetailCard({ paper, onOpenChat }) {
 
         <div className="detail-card-btn">
           <button id="robot" onClick={onOpenChat}>
-            <i className="fa-solid fa-robot"></i>
+            Ask AI <i className="fa-solid fa-robot ms-3"></i>
           </button>
 
           <button
@@ -82,7 +82,8 @@ export default function DetailCard({ paper, onOpenChat }) {
               }
             }}
           >
-            Go to website
+            Go to website{" "}
+            <i className="fa-solid fa-arrow-up-right-from-square ms-3"></i>
           </button>
           <button
             onClick={() => {
@@ -91,7 +92,7 @@ export default function DetailCard({ paper, onOpenChat }) {
               }
             }}
           >
-            View pdf
+            View pdf<i className="fa-solid fa-eye ms-3"></i>
           </button>
         </div>
       </div>

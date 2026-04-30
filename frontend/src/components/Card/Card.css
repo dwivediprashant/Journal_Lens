@@ -9,6 +9,7 @@
 .card:hover {
   transition: 0.25s ease;
   box-shadow: 0 0 10px gray;
+  /* opacity: 0.5; */
 }
 
 .img {
@@ -31,13 +32,13 @@
   font-style: italic;
 }
 
-button {
+.btn-container-card button {
   cursor: pointer;
   background-color: #111827;
 }
-button:hover {
+.btn-container-card button:hover {
   transition: 0.2s ease;
-  background-color: #3b82f6;
+  background-color: blue;
 }
 .btn-container-card {
   display: flex;

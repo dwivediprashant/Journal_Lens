@@ -16,7 +16,7 @@ a:hover i {
   transition: 0.25s;
   color: #3b82f6;
 }
-i {
+.social-media i {
   font-size: xx-large;
 }
 .brand h2 {
