@@ -2,6 +2,150 @@ import Search from "../../Search/Search";
 import Card from "../../Card/Card";
 import "./Journals.css";
 import { v4 as uuidv4 } from "uuid";
+const defaultSrc =
+  "https://5.imimg.com/data5/SELLER/Default/2025/6/522977434/JB/FG/PV/5675130/aiml-deep-learning-service.png";
+
+const journalCards = [
+  {
+    id: uuidv4(),
+    field: "Computer Science",
+    desc: "Explore research in algorithms, systems, artificial intelligence, software engineering, and data-driven computing. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Medicine",
+    desc: "Explore clinical studies, patient care, diagnostics, treatment methods, and public health research. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Chemistry",
+    desc: "Explore research in organic, inorganic, analytical, and physical chemistry. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Biology",
+    desc: "Explore research on living systems, genetics, ecology, molecular biology, and microbiology. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Materials Science",
+    desc: "Explore research on advanced materials, nanotechnology, composites, and functional surfaces. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Physics",
+    desc: "Explore theoretical and applied physics, including mechanics, quantum systems, optics, and thermodynamics. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Geology",
+    desc: "Explore earth science research on minerals, rocks, tectonics, stratigraphy, and natural hazards. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Psychology",
+    desc: "Explore studies on cognition, behavior, mental health, development, and social psychology. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Art",
+    desc: "Explore creative research across visual art, criticism, aesthetics, and practice-based scholarship. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "History",
+    desc: "Explore historical research on societies, events, archives, cultures, and long-term change. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Geography",
+    desc: "Explore research on spatial systems, landscapes, human-environment interaction, and geospatial methods. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Sociology",
+    desc: "Explore research on society, institutions, identity, inequality, and social change. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Business",
+    desc: "Explore business research on management, strategy, operations, entrepreneurship, and markets. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Political Science",
+    desc: "Explore research on governance, policy, institutions, political behavior, and international relations. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Economics",
+    desc: "Explore research on markets, trade, labor, development, public policy, and economic behavior. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Philosophy",
+    desc: "Explore research on ethics, logic, metaphysics, epistemology, and philosophy of mind. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Mathematics",
+    desc: "Explore research in algebra, analysis, topology, applied mathematics, and mathematical modeling. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Engineering",
+    desc: "Explore engineering research across design, systems, manufacturing, automation, and innovation. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Environmental Science",
+    desc: "Explore research on ecosystems, climate, sustainability, conservation, and environmental policy. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Agricultural and Food Sciences",
+    desc: "Explore research on crops, soil, food systems, nutrition, and agricultural technology. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Education",
+    desc: "Explore research on teaching, learning, curriculum, assessment, and educational policy. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Law",
+    desc: "Explore legal research on jurisprudence, regulation, constitutional law, and policy analysis. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+  {
+    id: uuidv4(),
+    field: "Linguistics",
+    desc: "Explore research on language structure, meaning, acquisition, variation, and communication. This journal collection highlights current methods, practical applications, and emerging questions shaping the field.",
+    src: defaultSrc,
+  },
+];
+
 export default function Journals() {
   return (
     <div className="journals-container">
@@ -12,41 +156,15 @@ export default function Journals() {
       </div>
       <div className="journals-wrapper">
         <div className="journals mt-5">
-          <Card
-            id={uuidv4()}
-            desc="This is AIML journal .This is AIML journal .This is AIML journal .This is AIML journal .This is AIML journal .This is AIML journal .This is AIML journal .This is AIML journal .This is AIML journal .This is AIML journal .This is AIML journal .This is AIML journal .This is AIML journal ."
-            src={`https://5.imimg.com/data5/SELLER/Default/2025/6/522977434/JB/FG/PV/5675130/aiml-deep-learning-service.png`}
-          />
-          <Card
-            id={uuidv4()}
-            desc="This is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journal"
-            src={`https://www.stonewallco.com/hubfs/Construction%20civil%20engineer%20technician%20and%20architect%20working.png`}
-          />
-          <Card
-            id={uuidv4()}
-            desc="This is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journal"
-            src={`https://i.ytimg.com/vi/3tisOnOkwzo/maxresdefault.jpg`}
-          />
-          <Card
-            id={uuidv4()}
-            desc={`This is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journalThis is Civil journal`}
-            src={`https://jrnrvu.edu.in/wp-content/uploads/2024/11/covering_gis_rs.png`}
-          />
-          <Card
-            id={uuidv4()}
-            desc="This is Mechanical journal. vThis is Mechanical journaThis is Mechanical journaThis is Mechanical journaThis is Mechanical journaThis is Mechanical journaThis is Mechanical journavv This is Mechanical journaThis is Mechanical journaThis is Mechanical journa"
-            src={`https://www.mckissock.com/wp-content/uploads/2025/02/mechanical-engineer.jpg`}
-          />
-          <Card
-            id={uuidv4()}
-            desc="This is Mechanical journal. vThis is Mechanical journaThis is Mechanical journaThis is Mechanical journaThis is Mechanical journaThis is Mechanical journaThis is Mechanical journavv This is Mechanical journaThis is Mechanical journaThis is Mechanical journa"
-            src={`https://nationalaffairs.com/storage/app/resized/3b5/0ba/e52/Hartman_resized_3b50bae525a0892cff72f08875f034ff52e2e295.jpg`}
-          />
-          <Card
-            id={uuidv4()}
-            desc="This is Mechanical journal. vThis is Mechanical journaThis is Mechanical journaThis is Mechanical journaThis is Mechanical journaThis is Mechanical journaThis is Mechanical journavv This is Mechanical journaThis is Mechanical journaThis is Mechanical journa"
-            src={`https://www.agsdevices.com/wp-content/uploads/2024/08/types-of-circuits-hero-image.jpg`}
-          />
+          {journalCards.map((card) => (
+            <Card
+              key={card.id}
+              field={card.field}
+              id={card.id}
+              desc={card.desc}
+              src={card.src}
+            />
+          ))}
         </div>
       </div>
     </div>

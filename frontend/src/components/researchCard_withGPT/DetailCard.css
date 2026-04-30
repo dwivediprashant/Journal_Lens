@@ -1,58 +1,102 @@
 .detail-card-btn button {
   background-color: black;
-  padding: 0.25rem;
+  padding: 0.6rem 0.9rem;
   color: white;
-  margin: 5px;
+  margin: 0;
   white-space: nowrap;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
-i {
-  height: 2px;
+.detail-card-btn .fa-robot {
+  size: 2px;
 }
 button:hover {
-  background-color: #3b82f6;
+  background-color: blue;
 }
 .detail-card-btn {
-  /* border: 0.25px solid gray; */
-  margin: 0.75rem;
+  margin-top: auto;
   display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
+
 .detail-card-wrapper {
-  max-width: 300px;
-  /* background-color: red; */
-  background-color: #bbbec4;
-  /* width: max-content; */
-  /* border-radius: 1rem; */
-  padding: 0.5rem;
+  width: 100%;
+  max-width: none;
+  /* background: #9fa0a1; */
+  /* border: 1px solid rgba(255, 255, 255, 0.08); */
+  border-radius: 18px;
+  /* box-shadow: 0 18px 40px rgba(15, 23, 42, 0.28); */
+  padding: 1rem;
   margin: 1rem;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   position: relative;
-}
-.tag {
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  /* background-color: #3b82f6; */
-  background-color: white;
-  color: gray;
-  padding: 0 0.5rem 0 0.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 5px gray;
+  min-height: 100%;
 }
 .detail-wrap {
-  margin-top: 1rem;
   height: 100%;
-  /* background-color: red; */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  /* align-items: center; */
+  gap: 0.95rem;
+  align-items: flex-start;
+}
+.detail-card-wrapper .title {
+  justify-content: flex-start;
+  text-align: left;
 }
 .title {
-  /* background-color: rebeccapurple; */
-  /* background-color: whitesmoke; */
   display: flex;
-  /* justify-content: first baseline; */
+  font-size: 1.5rem;
+  font-weight: 600;
   align-items: baseline;
+}
+
+.field-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 100%;
+  align-items: flex-start;
+  margin: 5px;
+}
+
+.field-label {
+  /* letter-spacing: 0.08em; */
+  text-transform: capitalize;
+  /* font-style: italic; */
+  /* background-color: green; */
+  /* text-decoration: underline; */
+  border-bottom: 0.05px solid gray;
+  color: rgb(13, 13, 172);
+  width: 100%;
+}
+
+/* YEAR (muted + italic) */
+.year {
+  /* color: bl; */
+  font-style: italic;
+  /* font-weight: 700; */
+}
+
+/* TOPICS */
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 0.1rem;
+  width: 100%;
+}
+
+.topic-pill {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-style: italic;
+  background-color: rgb(204, 202, 202);
+  font-size: small;
+}
+
+.topic-pill.empty {
+  opacity: 0.6;
 }
