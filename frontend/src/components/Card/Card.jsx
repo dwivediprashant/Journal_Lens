@@ -19,7 +19,9 @@ export default function Card({ field, id, desc, src }) {
         <img src={src} alt="" className="img" />
       </div>
       <div className="details">
-        <div className="field-pill"># {field}</div>
+        <div className="field-pill">
+          <span className="text-red-800">Field: </span> &nbsp;{field}
+        </div>
         <div className="card-description">
           <span>
             {(desc || "").slice(0, 220)}

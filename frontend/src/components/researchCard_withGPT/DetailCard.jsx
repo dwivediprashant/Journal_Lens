@@ -30,17 +30,23 @@ export default function DetailCard({ paper, onOpenChat }) {
     <div className="detail-card-wrapper bg-gray-300">
       <div className="detail-wrap">
         <div className="field-block rounded-lg">
-          <div className="title text-center">{title}</div>
+          <div className="title text-center">
+            <i className="fa-solid fa-tag fa-sm"></i> &nbsp;{title}
+          </div>
         </div>
 
         <div className="px-3 bg-gray-100 py-3">
           <div className="field-block">
-            <div className="field-label">Authors</div>
+            <div className="field-label">
+              <i className="fa-solid fa-user"></i> Authors
+            </div>
             <div className="authors">{authors}</div>
           </div>
 
           <div className="field-block">
-            <div className="field-label">Publication Year</div>
+            <div className="field-label">
+              <i className="fa-solid fa-calendar-days"></i> Publication Year
+            </div>
             {year ? (
               <div className="year">{year}</div>
             ) : (
@@ -49,12 +55,16 @@ export default function DetailCard({ paper, onOpenChat }) {
           </div>
 
           <div className="field-block">
-            <div className="field-label">Source / Publisher</div>
+            <div className="field-label">
+              <i className="fa-solid fa-book"></i> Source / Publisher
+            </div>
             <div className="source">{source}</div>
           </div>
 
           <div className="field-block topics-block">
-            <div className="field-label">Related Topics</div>
+            <div className="field-label">
+              <i className="fa-solid fa-link"></i> Linked Topics
+            </div>
             <div className="topics">
               {topics.length > 0 ? (
                 topics.map((t) => (
