@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
           filter: "type:article,open_access.is_oa:true",
           search: field,
           select:
-            "display_name,authorships,publication_year,primary_location,open_access,cited_by_count,primary_topic",
+            "display_name,authorships,publication_year,primary_location,open_access,cited_by_count,primary_topic,abstract_inverted_index",
           per_page: 10,
           api_key: OPENALEX_API_KEY,
           page: pageNum,
