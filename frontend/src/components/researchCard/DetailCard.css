@@ -7,9 +7,7 @@
   white-space: nowrap;
   border-radius: 0.7rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
-}
-.detail-card-btn .fa-robot {
-  font-size: large;
+  font-size: small;
 }
 .detail-card-btn {
   margin-top: auto;
@@ -17,7 +15,6 @@
   justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
-  /* background-color: green; */
   width: 100%;
 }
 .detail-card-btn button:hover {
@@ -44,7 +41,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.95rem;
-  align-items: flex-start;
+  align-items: center;
 }
 .detail-card-wrapper .title {
   justify-content: flex-start;
@@ -67,11 +64,7 @@
 }
 
 .field-label {
-  /* letter-spacing: 0.08em; */
   text-transform: capitalize;
-  /* font-style: italic; */
-  /* background-color: green; */
-  /* text-decoration: underline; */
   border-bottom: 0.05px solid gray;
   color: rgb(13, 13, 172);
   width: 100%;
@@ -81,8 +74,8 @@
 .topics {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  padding-top: 0.1rem;
+  gap: 8px;
+  padding: 1rem 0 1rem 0;
   width: 100%;
 }
 
@@ -92,6 +85,7 @@
   font-style: italic;
   background-color: rgb(204, 202, 202);
   font-size: small;
+  width: max-content;
 }
 
 .topic-pill.empty {
@@ -101,6 +95,17 @@
 .top-detail {
   display: flex;
   justify-content: space-between;
-  /* background-color: green; */
   width: 100%;
+}
+.company-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+}
+.oa-status {
+  display: flex;
+  align-items: center;
+}
+.oa-status span img {
+  height: 40px;
 }

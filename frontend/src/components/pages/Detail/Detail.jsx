@@ -1,13 +1,15 @@
 import "./Detail.css";
 import React, { useState } from "react";
-import DetailCard from "../../researchCard_withGPT/DetailCard";
+import DetailCard from "../../researchCard/DetailCard";
 import ChatBot from "../../ChatBot/ChatBot";
 import apiClient from "../../../configs/apiClient";
-import { useSearchParams } from "react-router";
+import { useParams, useSearchParams } from "react-router";
+
 import MagnifyGlassLoader from "../../loaders/MagnifyGlassLoader";
 
 export default function Detail() {
   //hook
+
   const [searchParams] = useSearchParams();
   const field = searchParams.get("field");
   const desc = searchParams.get("desc");
