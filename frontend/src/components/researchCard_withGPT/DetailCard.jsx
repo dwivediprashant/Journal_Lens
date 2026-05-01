@@ -1,5 +1,7 @@
 import "./DetailCard.css";
 
+import CompanyLogo from "../utils/CompanyLogo";
+
 export default function DetailCard({ paper, onOpenChat }) {
   const title = paper?.display_name ?? "Untitled";
 
@@ -18,7 +20,15 @@ export default function DetailCard({ paper, onOpenChat }) {
 
   const websiteUrl = paper?.primary_location?.landing_page_url ?? "";
 
-  const pdfUrl = paper?.open_access?.oa_url ?? "";
+  const pdfUrl = paper?.open_access?.oa_url || "";
+
+  let domain = "";
+
+  try {
+    domain = pdfUrl.length > 0 ? new URL(pdfUrl).hostname : "";
+  } catch {
+    domain = "";
+  }
 
   const topics = [
     paper?.primary_topic?.display_name,
@@ -34,7 +44,36 @@ export default function DetailCard({ paper, onOpenChat }) {
             <i className="fa-solid fa-tag fa-sm"></i> &nbsp;{title}
           </div>
         </div>
+        <div className="field-block">
+          <div className="field-label">
+            <i className="fa-solid fa-book"></i> Source details
+          </div>
 
+          <div className="flex  w-full">
+            <CompanyLogo domain={domain.length > 0 ? domain : "openalex.org"} />
+            <div className="flex flex-col">
+              <div className="ms-3">
+                <span className="text-blue-800">Source</span> : {source}
+              </div>
+              <div className="ms-3">
+                <span className="text-blue-800">Hosted at</span> :{" "}
+                {domain.length > 0 ? (
+                  <a
+                    className="cursor-pointer underline hover:text-blue-600"
+                    href={`https://${domain}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {domain}{" "}
+                    <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                ) : (
+                  <span className="text-red-600">Not found</span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="px-3 bg-gray-100 py-3">
           <div className="field-block">
             <div className="field-label">
@@ -52,13 +91,6 @@ export default function DetailCard({ paper, onOpenChat }) {
             ) : (
               <div className="year">Not available</div>
             )}
-          </div>
-
-          <div className="field-block">
-            <div className="field-label">
-              <i className="fa-solid fa-book"></i> Source / Publisher
-            </div>
-            <div className="source">{source}</div>
           </div>
 
           <div className="field-block topics-block">

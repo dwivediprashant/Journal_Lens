@@ -77,13 +77,6 @@
   width: 100%;
 }
 
-/* YEAR (muted + italic) */
-.year {
-  /* color: bl; */
-  font-style: italic;
-  /* font-weight: 700; */
-}
-
 /* TOPICS */
 .topics {
   display: flex;
@@ -103,4 +96,11 @@
 
 .topic-pill.empty {
   opacity: 0.6;
+}
+
+.top-detail {
+  display: flex;
+  justify-content: space-between;
+  /* background-color: green; */
+  width: 100%;
 }
