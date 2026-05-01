@@ -11,6 +11,7 @@ export default function Detail() {
   const [searchParams] = useSearchParams();
   const field = searchParams.get("field");
   const desc = searchParams.get("desc");
+  const src = searchParams.get("src");
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isShowBtn, setisShowBtn] = useState(true);
   const [loader, setLoader] = useState(false);
@@ -95,10 +96,11 @@ export default function Detail() {
     <div className="journal-details m-5 ">
       <div className="top-details">
         <div className="detail-img">
-          <img
-            src="https://www.stonewallco.com/hubfs/Construction%20civil%20engineer%20technician%20and%20architect%20working.png"
-            alt=""
-          />
+          <img src={src} alt="" />
+        </div>
+        <div className="italic text-gray-600">
+          <span className="font-bold">Field of research : </span>
+          {field}
         </div>
         <div className="desc ">
           <span className=" text-3xl text-gray-700 font-bold">" </span>

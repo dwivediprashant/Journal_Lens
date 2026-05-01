@@ -7,7 +7,7 @@ export default function Card({ field, id, desc, src }) {
   const handleCardClick = (e) => {
     e.preventDefault();
     navigate(
-      `/journals/${id}?field=${encodeURIComponent(fieldQuery)}&desc=${encodeURIComponent(desc)}`,
+      `/journals/${id}?field=${encodeURIComponent(fieldQuery)}&desc=${encodeURIComponent(desc)}&src=${encodeURIComponent(src)}`,
     );
   };
   return (
@@ -15,8 +15,8 @@ export default function Card({ field, id, desc, src }) {
       onClick={handleCardClick}
       className="card text-black rounded-lg overflow-hidden cursor-pointer"
     >
-      <div className="p-2">
-        <img src={src} alt="" className="img" />
+      <div className="flex justify-center items-center p-2 ">
+        <img src={src} alt="" className="img " />
       </div>
       <div className="details">
         <div className="field-pill">

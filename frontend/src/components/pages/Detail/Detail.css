@@ -11,7 +11,8 @@
   /* background-color: green; */
 }
 .detail-img img {
-  max-width: 40rem;
+  height: 20rem;
+  /* width: 100%; */
 }
 .list {
   display: flex;

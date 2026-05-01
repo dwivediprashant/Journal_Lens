@@ -30,3 +30,6 @@
 .fa-magnifying-glass {
   font-size: larger;
 }
+.fallback-img {
+  height: 300px;
+}

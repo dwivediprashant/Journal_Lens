@@ -38,8 +38,15 @@ export default function Journals() {
               ))
             ) : (
               <div className="flex flex-col items-center  w-[100%] h-[40vh]">
+                <div>
+                  <img
+                    src="/media/fields/thinking.png"
+                    alt=""
+                    className="fallback-img"
+                  />
+                </div>
                 <div className="text-red-700 m-5">
-                  No field matched with your search
+                  Ohh! No field matched with your search
                 </div>
                 <button className="cursor-pointer p-2 rounded-lg bg-black text-white w-[max-content] hover:opacity-[0.8]">
                   Search with own field

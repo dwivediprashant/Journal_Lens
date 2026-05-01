@@ -50,7 +50,12 @@ export default function DetailCard({ paper, onOpenChat }) {
           </div>
 
           <div className="flex  w-full">
-            <CompanyLogo domain={domain.length > 0 ? domain : "openalex.org"} />
+            <div>
+              <CompanyLogo
+                domain={domain.length > 0 ? domain : "openalex.org"}
+              />
+              <div className=" text-gray-600 text-xs italic">HOST LOGO</div>
+            </div>
             <div className="flex flex-col">
               <div className="ms-3">
                 <span className="text-blue-800">Source</span> : {source}
