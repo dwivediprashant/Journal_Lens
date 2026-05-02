@@ -23,7 +23,8 @@ export default function DetailCard({ paper, onOpenChat }) {
 
   const websiteUrl = paper?.primary_location?.landing_page_url ?? "";
 
-  const pdfUrl = paper?.open_access?.oa_url || "";
+  const pdfUrl =
+    paper?.primary_location?.pdf_url || paper?.open_access?.oa_url || "";
   const isOpenAccess = paper?.open_access?.is_oa || false;
 
   let domain = "";

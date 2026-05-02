@@ -4,12 +4,15 @@ import DetailCard from "../../researchCard/DetailCard";
 import ChatBot from "../../ChatBot/ChatBot";
 import apiClient from "../../../configs/apiClient";
 import { useParams, useSearchParams } from "react-router";
+import { useContext } from "react";
+import MainContext from "../../../Contexts/MainContext";
 
 import MagnifyGlassLoader from "../../loaders/MagnifyGlassLoader";
 
 export default function Detail() {
   //hook
 
+  const { callResearchApi, data, metaData } = useContext(MainContext);
   const [searchParams] = useSearchParams();
   const field = searchParams.get("field");
   const desc = searchParams.get("desc");
@@ -17,43 +20,18 @@ export default function Detail() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isShowBtn, setisShowBtn] = useState(true);
   const [loader, setLoader] = useState(false);
-  const [data, setData] = useState([]);
-  const [metaData, setMetaData] = useState({});
+
   const [pageNum, setPageNum] = useState(1);
   const totalPages = metaData?.per_page
     ? Math.ceil(metaData.count / metaData.per_page)
     : 1;
 
-  //research api call
-  const callResearchApi = async (pageNum) => {
-    setLoader(true);
-    try {
-      const res = await apiClient({
-        method: "GET",
-        url: "/researchpapers",
-        params: {
-          field: field,
-          pageNum: pageNum,
-        },
-      });
-
-      return res;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    } finally {
-      setLoader(false);
-    }
-  };
-
   //show-button click handling
   const handleisShowBtnClick = async (e) => {
     e.preventDefault();
+    setLoader(true);
     try {
-      const res = await callResearchApi(pageNum);
-      setData(res?.data?.data?.results);
-      setMetaData(res?.data?.data?.meta);
-      // console.log(res.data.data);
+      await callResearchApi(pageNum, field);
       setisShowBtn(false);
     } catch (error) {
       console.log(error);
@@ -64,13 +42,11 @@ export default function Detail() {
 
   //next button click
   const handleNextBtnClick = async () => {
+    if (pageNum >= totalPages) return;
     try {
       const nextPage = pageNum + 1;
       setPageNum(nextPage);
-      const res = await callResearchApi(nextPage);
-      setData(res?.data?.data?.results);
-      setMetaData(res?.data?.data?.meta);
-      // console.log(res.data.data);
+      await callResearchApi(nextPage);
     } catch (error) {
       console.log(error);
     }
@@ -84,10 +60,7 @@ export default function Detail() {
       }
       const prevPage = pageNum - 1;
       setPageNum(prevPage);
-      const res = await callResearchApi(prevPage);
-      setData(res?.data?.data?.results);
-      setMetaData(res?.data?.data?.meta);
-      // console.log(res.data.data);
+      await callResearchApi(prevPage);
     } catch (error) {
       console.log(error);
     }
