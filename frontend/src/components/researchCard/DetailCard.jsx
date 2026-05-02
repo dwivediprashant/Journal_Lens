@@ -3,16 +3,18 @@ import ParseAbstract from "../utils/ParseAbstract";
 import getCompanyLogo from "../utils/CompanyLogo";
 import { useNavigate, useParams } from "react-router";
 
-export default function DetailCard({ paper, onOpenChat }) {
+export default function DetailCard({
+  paper,
+  onOpenChat,
+  backendAuthorName = "",
+}) {
   const title = paper?.display_name ?? "Untitled";
 
   const abstract = paper?.abstract_inverted_index || "";
   const parsedAbstract = ParseAbstract(abstract);
   const authors =
-    paper?.authorships
-      ?.map((a) => a?.author?.display_name)
-      .filter(Boolean)
-      .join(", ") || "Authors unavailable";
+    paper?.authorships?.map((a) => a?.author?.display_name).filter(Boolean) ||
+    [];
 
   const year = paper?.publication_year ?? "";
 
@@ -112,7 +114,25 @@ export default function DetailCard({ paper, onOpenChat }) {
             <div className="field-label">
               <i className="fa-solid fa-user"></i> Authors
             </div>
-            <div className="authors">{authors}</div>
+            <div className="authors">
+              {authors.map((name, index) => {
+                return (
+                  <>
+                    <span
+                      key={name}
+                      className={
+                        name.toLowerCase() === backendAuthorName.toLowerCase()
+                          ? "highlight"
+                          : ""
+                      }
+                    >
+                      {name}
+                    </span>
+                    {index < authors.length - 1 && ", "}
+                  </>
+                );
+              })}
+            </div>
           </div>
 
           <div className="field-block">

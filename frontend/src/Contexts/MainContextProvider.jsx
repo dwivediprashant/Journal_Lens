@@ -7,8 +7,8 @@ export default function MainContextProvider({ children }) {
   const [data, setData] = useState([]);
   const [metaData, setMetaData] = useState({});
 
-  //research api call
-  const callResearchApi = async (pageNum, field) => {
+  //research api call with optional authorId
+  const callResearchApi = async (pageNum, field, authorId = "") => {
     // setLoader(true);
     try {
       const res = await apiClient({
@@ -17,6 +17,7 @@ export default function MainContextProvider({ children }) {
         params: {
           field: field,
           pageNum: pageNum,
+          authorId: authorId,
         },
       });
       setData(res?.data?.data?.results);

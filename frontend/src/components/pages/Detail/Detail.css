@@ -86,16 +86,18 @@
   padding: 1rem;
   border-radius: 20px;
 }
-.pagination-btn {
+.pagination-btn-filters {
   width: 100%;
   margin: 0;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  justify-content: space-between;
+  align-items: start;
   min-height: 3rem;
   flex-shrink: 0;
+  padding: 0.5rem;
 }
-.pagination-btn button {
+.pagination-btn-filters .prev-btn,
+.next-btn {
   cursor: pointer;
   padding: 0.3rem 0.7rem;
   font-size: large;
@@ -105,7 +107,7 @@
   border-radius: 0.5rem;
   opacity: 0.6;
 }
-.pagination-btn button:hover {
+.pagination-btn-filters button:hover {
   opacity: 1;
   transition: 0.1s;
 }
@@ -126,4 +128,13 @@ i {
   align-items: center;
   width: 100%;
   min-height: 50vh;
+}
+.search-btn {
+  cursor: pointer;
+  background-color: blue;
+  color: white;
+  padding: 0.6rem 1rem;
+}
+.search-btn:hover {
+  background-color: rgba(0, 0, 255, 0.75);
 }

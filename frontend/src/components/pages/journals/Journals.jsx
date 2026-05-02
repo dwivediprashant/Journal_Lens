@@ -29,6 +29,7 @@ export default function Journals() {
             placeholder="Search by field names medicine, law ..."
             className="border outline-none px-4 w-[100%]"
             onChange={(e) => setSearchVal(e.target.value)}
+            value={searchVal}
           />
           <div className="bg-blue-800 text-white">
             <i className="fa-solid fa-magnifying-glass m-5"></i>
