@@ -4,9 +4,7 @@ export default function PublisherCard() {
   return (
     <div>
       <div className="header">
-        <h1 className="w-full bg-gray-700 text-center p-1">
-          Our Publishers & Journals
-        </h1>
+        <h1 className="w-full text-center p-1">Journal Providers</h1>
       </div>
       <div className="round-card-wrapper">
         <div className="round-card-container">

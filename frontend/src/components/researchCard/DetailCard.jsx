@@ -2,6 +2,7 @@ import "./DetailCard.css";
 import ParseAbstract from "../utils/ParseAbstract";
 import getCompanyLogo from "../utils/CompanyLogo";
 import { useNavigate, useParams } from "react-router";
+import React from "react";
 
 export default function DetailCard({
   paper,
@@ -117,7 +118,7 @@ export default function DetailCard({
             <div className="authors">
               {authors.map((name, index) => {
                 return (
-                  <>
+                  <React.Fragment key={index}>
                     <span
                       key={name}
                       className={
@@ -129,7 +130,7 @@ export default function DetailCard({
                       {name}
                     </span>
                     {index < authors.length - 1 && ", "}
-                  </>
+                  </React.Fragment>
                 );
               })}
             </div>

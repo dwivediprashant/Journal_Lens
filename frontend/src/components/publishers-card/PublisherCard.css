@@ -14,6 +14,5 @@
 .header h1 {
   font-weight: 600;
   font-size: xx-large;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #a8a9ac;
+  border-bottom: 0.25px solid gray;
 }
