@@ -19,6 +19,7 @@ router.get("/id", async (req, res) => {
   try {
     const response = await axios.get(`${OPENALEX_BASE_URL}/authors`, {
       params: {
+        filter: `display_name.search:${author}`,
         search: author,
         select: "ids,display_name",
         api_key: OPENALEX_API_KEY,
