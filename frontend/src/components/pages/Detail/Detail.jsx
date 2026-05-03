@@ -87,6 +87,7 @@ export default function Detail() {
     setAuthorId("");
     setBackendAuthorName("");
     setAuthor("");
+    setPageNum(1);
   };
   //render
   return (

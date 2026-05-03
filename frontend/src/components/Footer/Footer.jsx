@@ -1,4 +1,5 @@
 import "./Footer.css";
+import { Link } from "react-router";
 export default function Footer() {
   const sources = [
     { name: "SAGE Publishing", link: "https://journals.sagepub.com/" },
@@ -50,14 +51,14 @@ export default function Footer() {
             <h3 className=" mb-3 text-blue-700">Quick Links</h3>
             <ul className="space-y-2 ">
               <li>
-                <a href="/" className="hover:underline">
+                <Link to="/" className="hover:underline">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/journals" className="hover:underline">
+                <Link to="/journals" className="hover:underline">
                   See Journals
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -67,29 +68,66 @@ export default function Footer() {
             <div>
               <h3 className="  mb-3 text-blue-700">Connect</h3>
               <div className="social-media flex space-x-4">
-                <a href="#">
+                <a
+                  href="https://github.com/dwivediprashant"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <i className="fa-brands fa-square-x-twitter"></i>
                 </a>
-                <a href="#">
+                <a
+                  href="https://github.com/dwivediprashant"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <i className="fa-brands fa-linkedin"></i>
                 </a>
-                <a href="#">
+                <a
+                  href="https://github.com/dwivediprashant"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <i className="fa-brands fa-square-github"></i>
                 </a>
-                <a href="">
+                <a href="" target="_blank" rel="noopener noreferrer">
                   <i className="fa-brands fa-square-instagram"></i>
                 </a>
               </div>
             </div>
           </div>
           <div className="footer-logo">
-            <img
-              src="https://lnct.ac.in/wp-content/uploads/2021/04/lnct-g-logo.png"
-              alt=""
-            />
+            <a
+              href="https://lnct.ac.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src="/media/lnct.png" alt="" />
+            </a>
           </div>
         </div>
-
+        <div className="api-partner min-h-[200px]">
+          <div className="api-partner-label">
+            <div className="api-partner-title">API Partner</div>
+            <div className="api-partner-tagline text-sm">
+              This platform integrates data from the OpenAlex API, enabling
+              seamless discovery of high-quality research papers, journals, and
+              academic insights across multiple disciplines.
+            </div>
+          </div>
+          <div className="api-partner-logos">
+            <div className="partner-card handshake-img">
+              <img src="/media/handshake.png" alt="Handshake partner" />
+            </div>
+            <div className="partner-card openalex-img">
+              <a href="openalex.org" target="_blank" rel="noopener noreferrer">
+                <img
+                  src="/media/publishers/openalex.png"
+                  alt="OpenAlex partner"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
         <div className="sources-bottom">
           <h3 className="mb-3 text-blue-700">All Sources</h3>
           <ul className="sources-list">

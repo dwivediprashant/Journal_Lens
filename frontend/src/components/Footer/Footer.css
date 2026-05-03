@@ -26,7 +26,6 @@
 .sources-bottom {
   margin-top: 2rem;
   padding-top: 1rem;
-  border-top: 1px solid #7dd3fc;
 }
 
 .sources-list {
@@ -44,4 +43,71 @@
 .footer-logo img {
   max-width: 300px;
   min-width: 100px;
+}
+.api-partner {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  border-top: 0.5px solid #7dd3fc;
+  border-bottom: 0.5px solid #7dd3fc;
+  margin-top: 1rem;
+  background-color: white;
+  width: 100%;
+  padding-left: 2rem;
+}
+.api-partner-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 40%;
+}
+
+.api-partner-title {
+  white-space: nowrap;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.api-partner-tagline {
+  line-height: 1.5;
+}
+
+.api-partner-logos {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 2rem;
+  flex: 1;
+  flex-wrap: nowrap;
+  width: max-content;
+}
+
+.partner-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  min-width: 120px;
+}
+
+.handshake-img,
+.openalex-img {
+  width: auto;
+}
+
+.partner-card img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.handshake-img img {
+  max-width: 120px;
+}
+
+.openalex-img img {
+  max-width: 180px;
 }
