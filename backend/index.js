@@ -1,22 +1,21 @@
 import "dotenv/config";
-
 import express from "express";
 import cors from "cors";
+import corsOptions from "./configs/corsOptions.js";
+
+import chatRoutes from './routes/chat.js';
+import researchpapersRoute from "./routes/researchpapers.js";
+import authorRoute from "./routes/author.js";
+
 const app = express();
 const port = process.env.PORT;
 
-//routes import
-import researchpapersRoute from "./routes/researchpapers.js";
-import authorRoute from "./routes/author.js";
-// other imports
-import corsOptions from "./configs/corsOptions.js";
-//routes
-
-//middlewares
-
+// CORS sabse pehle
 app.use(cors(corsOptions));
+app.use(express.json());
 
-// related to research paper
+// Routes
+app.use('/api/chat', chatRoutes);
 app.use("/api/researchpapers", researchpapersRoute);
 app.use("/api/author", authorRoute);
 
@@ -24,6 +23,6 @@ app.get("/", (req, res) => {
   res.json({ status: "success", msg: "Backend start" });
 });
 
-app.listen(port, (req, res) => {
+app.listen(port, () => {
   console.log(`Server running at ${port}`);
 });

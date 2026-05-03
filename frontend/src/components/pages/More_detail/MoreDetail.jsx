@@ -2,6 +2,7 @@ import "./MoreDetail.css";
 import { useState } from "react";
 import { useLocation } from "react-router";
 import ChatBot from "../../ChatBot/ChatBot";
+
 export default function MoreDetail() {
   const location = useLocation();
   const paper = location.state?.paper;
@@ -128,7 +129,17 @@ export default function MoreDetail() {
           </div>
         </div>
       </div>
-      <ChatBot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+
+      {/* journalId ke liye pdfUrl use kar rahe hain kyunki paper?.id undefined tha */}
+      <ChatBot
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        journalId={pdfUrl || websiteUrl}
+        pdfUrl={pdfUrl}
+        abstract={parsedAbstract}
+        title={title}
+        authors={authors}
+     />
     </div>
   );
 }

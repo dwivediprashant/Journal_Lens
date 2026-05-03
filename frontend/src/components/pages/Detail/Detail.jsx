@@ -7,7 +7,6 @@ import { useSearchParams } from "react-router";
 import { useContext } from "react";
 import MainContext from "../../../Contexts/MainContext";
 import { useQuery } from "@tanstack/react-query";
-
 import MagnifyGlassLoader from "../../loaders/MagnifyGlassLoader";
 
 export default function Detail() {
@@ -16,8 +15,9 @@ export default function Detail() {
   const field = searchParams.get("field");
   const desc = searchParams.get("desc");
   const src = searchParams.get("src");
-  const [isChatOpen, setIsChatOpen] = useState(false);
 
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [selectedPaper, setSelectedPaper] = useState(null);
   const [author, setAuthor] = useState("");
   const [authorId, setAuthorId] = useState("");
   const [pageNum, setPageNum] = useState(1);
@@ -35,50 +35,37 @@ export default function Detail() {
     ? Math.ceil(papersQuery.data.meta.count / papersQuery.data.meta.per_page)
     : 1;
 
-  //next button click
   const handleNextBtnClick = () => {
     if (pageNum >= totalPages) return;
-    setPageNum((currentPage) => currentPage + 1);
+    setPageNum((curr) => curr + 1);
   };
 
-  //prev button click
   const handlePrevBtnClick = () => {
     if (pageNum === 1) return;
-    setPageNum((currentPage) => currentPage - 1);
+    setPageNum((curr) => curr - 1);
   };
-
-  //search filter click
 
   const handleFilteredSearchClick = async (e) => {
     e.preventDefault();
     if (!author) return;
     try {
-      //first get id of author then retrieve papers of authors
       const res = await apiClient({
         method: "GET",
         url: "/author/id",
-        params: {
-          author: author,
-        },
+        params: { author },
       });
-      if (res.status !== 200) {
-        return;
-      }
-      // console.log(res.data);
+      if (res.status !== 200) return;
       const resolvedAuthorId =
         res.data.ids?.openalex || res.data.ids?.orcid || "";
       if (!resolvedAuthorId) return;
-
       setAuthorId(resolvedAuthorId);
-
-      //set BackendAuthorName to "show results for" feature
       setBackendAuthorName(res.data.author);
+      setPageNum(1);
     } catch (error) {
       console.log(error);
     }
   };
 
-  //clear filtered author work and display results without author filter
   const handleClearFilteredSearch = () => {
     if (!backendAuthorName) {
       setAuthor("");
@@ -89,9 +76,9 @@ export default function Detail() {
     setAuthor("");
     setPageNum(1);
   };
-  //render
+
   return (
-    <div className="journal-details m-5 ">
+    <div className="journal-details m-5">
       <div className="top-details">
         <div className="detail-img">
           <img src={src} alt="" />
@@ -100,22 +87,24 @@ export default function Detail() {
           <span className="font-bold">Field of research : </span>
           {field}
         </div>
-        <div className="desc ">
-          <span className=" text-3xl text-gray-700 font-bold">" </span>
-          <span>{desc}</span>{" "}
-          <span className=" text-3xl text-gray-700 font-bold">" </span>
+        <div className="desc">
+          <span className="text-3xl text-gray-700 font-bold">" </span>
+          <span>{desc}</span>
+          <span className="text-3xl text-gray-700 font-bold"> "</span>
         </div>
       </div>
+
       <div className="detail-list-title text-3xl m-3">
-        <div>
-          <span className="text-blue-700">{field}'s</span> research papers
-        </div>
+        <span className="text-blue-700">{field}'s</span> research papers
       </div>
+
       <div className="list">
         <div className="detailcard-main">
-          <div className=" pagination-btn-filters">
+
+          {/* Filters + Pagination */}
+          <div className="pagination-btn-filters">
             <div className="filters flex items-start gap-4 ms-[5rem] flex-wrap">
-              <div className="flex flex-col min-w-[28rem] max-w-[28rem]  gap-1">
+              <div className="flex flex-col min-w-[28rem] max-w-[28rem] gap-1">
                 <input
                   type="text"
                   placeholder="Enter author name"
@@ -124,7 +113,7 @@ export default function Detail() {
                   value={author}
                 />
                 {backendAuthorName && (
-                  <span className="italic flex flex-wrap text-gray-400 text-xs max-w-[100%]">
+                  <span className="italic flex flex-wrap text-gray-400 text-xs">
                     Showing Results for author name ={" "}
                     <span className="text-black bg-yellow-200">
                       {backendAuthorName}
@@ -137,7 +126,7 @@ export default function Detail() {
                 onClick={handleClearFilteredSearch}
                 className="text-red-600 p-2 cursor-pointer hover:text-red-700"
               >
-                <i className="fa-solid fa-trash  fa-xl"></i>
+                <i className="fa-solid fa-trash fa-xl"></i>
               </button>
 
               <button
@@ -147,6 +136,7 @@ export default function Detail() {
                 Search
               </button>
             </div>
+
             <div>
               <button
                 className={`prev-btn ${pageNum === 1 ? "disabled" : ""}`}
@@ -164,6 +154,8 @@ export default function Detail() {
               </button>
             </div>
           </div>
+
+          {/* Papers List */}
           {papersQuery.isLoading ? (
             <div className="loader-container">
               <MagnifyGlassLoader />
@@ -174,7 +166,10 @@ export default function Detail() {
                 <DetailCard
                   key={paper?.id ?? index}
                   paper={paper}
-                  onOpenChat={() => setIsChatOpen(true)}
+                  onOpenChat={() => {
+                    setSelectedPaper(paper);
+                    setIsChatOpen(true);
+                  }}
                   backendAuthorName={backendAuthorName}
                 />
               ))}
@@ -189,7 +184,34 @@ export default function Detail() {
           )}
         </div>
       </div>
-      <ChatBot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+
+      <ChatBot
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        journalId={
+          selectedPaper?.primary_location?.pdf_url ||
+          selectedPaper?.open_access?.oa_url ||
+          selectedPaper?.id ||
+          null
+        }
+        pdfUrl={
+          selectedPaper?.primary_location?.pdf_url ||
+          selectedPaper?.open_access?.oa_url ||
+          null
+        }
+        abstract={
+          selectedPaper?.abstract ||
+          selectedPaper?.abstract_inverted_index ||
+          null
+        }
+        title={selectedPaper?.display_name || null}
+        authors={
+          selectedPaper?.authorships
+            ?.map((a) => a?.author?.display_name)
+            .filter(Boolean)
+            .join(", ") || null
+        }
+      />
     </div>
   );
 }
