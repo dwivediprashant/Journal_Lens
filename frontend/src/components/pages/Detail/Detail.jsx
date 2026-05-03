@@ -3,77 +3,48 @@ import React, { useState } from "react";
 import DetailCard from "../../researchCard/DetailCard";
 import ChatBot from "../../ChatBot/ChatBot";
 import apiClient from "../../../configs/apiClient";
-import { useParams, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 import { useContext } from "react";
 import MainContext from "../../../Contexts/MainContext";
+import { useQuery } from "@tanstack/react-query";
 
 import MagnifyGlassLoader from "../../loaders/MagnifyGlassLoader";
 
 export default function Detail() {
-  //hook
-
-  const { callResearchApi, data, metaData } = useContext(MainContext);
+  const { callResearchApi } = useContext(MainContext);
   const [searchParams] = useSearchParams();
   const field = searchParams.get("field");
   const desc = searchParams.get("desc");
   const src = searchParams.get("src");
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isShowBtn, setisShowBtn] = useState(true);
-  const [loader, setLoader] = useState(false);
 
   const [author, setAuthor] = useState("");
   const [authorId, setAuthorId] = useState("");
   const [pageNum, setPageNum] = useState(1);
-  const totalPages = metaData?.per_page
-    ? Math.ceil(metaData.count / metaData.per_page)
+  const [backendAuthorName, setBackendAuthorName] = useState("");
+
+  const papersQuery = useQuery({
+    queryKey: ["papers", pageNum, field, authorId],
+    queryFn: () => callResearchApi(pageNum, field, authorId),
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 24 * 60 * 60 * 1000,
+  });
+
+  const data = papersQuery.data?.results ?? [];
+  const totalPages = papersQuery.data?.meta?.per_page
+    ? Math.ceil(papersQuery.data.meta.count / papersQuery.data.meta.per_page)
     : 1;
 
-  // author name returned by backend
-  const [backendAuthorName, setBackendAuthorName] = useState("");
-  //show-button click handling
-  const handleisShowBtnClick = async (e) => {
-    e.preventDefault();
-    setLoader(true);
-    try {
-      await callResearchApi(pageNum, field);
-      setisShowBtn(false);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoader(false);
-    }
-  };
-
   //next button click
-  const handleNextBtnClick = async () => {
+  const handleNextBtnClick = () => {
     if (pageNum >= totalPages) return;
-    setLoader(true);
-    try {
-      const nextPage = pageNum + 1;
-      setPageNum(nextPage);
-      await callResearchApi(nextPage, field, authorId);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoader(false);
-    }
+    setPageNum((currentPage) => currentPage + 1);
   };
 
   //prev button click
-  const handlePrevBtnClick = async () => {
-    if (pageNum === 1) {
-      return;
-    }
-    try {
-      setLoader(true);
-      const prevPage = pageNum - 1;
-      setPageNum(prevPage);
-      await callResearchApi(prevPage, field, authorId);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoader(false);
-    }
+  const handlePrevBtnClick = () => {
+    if (pageNum === 1) return;
+    setPageNum((currentPage) => currentPage - 1);
   };
 
   //search filter click
@@ -81,7 +52,6 @@ export default function Detail() {
   const handleFilteredSearchClick = async (e) => {
     e.preventDefault();
     if (!author) return;
-    setLoader(true);
     try {
       //first get id of author then retrieve papers of authors
       const res = await apiClient({
@@ -103,31 +73,20 @@ export default function Detail() {
 
       //set BackendAuthorName to "show results for" feature
       setBackendAuthorName(res.data.author);
-      //now if ids fetched successfully then proceeed to fetch author works
-      await callResearchApi(pageNum, field, resolvedAuthorId);
     } catch (error) {
       console.log(error);
-    } finally {
-      setLoader(false);
     }
   };
 
   //clear filtered author work and display results without author filter
-  const handleClearFilteredSearch = async () => {
+  const handleClearFilteredSearch = () => {
     if (!backendAuthorName) {
       setAuthor("");
       return;
     }
-    setLoader(true);
-    try {
-      await callResearchApi(pageNum, field);
-      setBackendAuthorName("");
-      setAuthor("");
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoader(false);
-    }
+    setAuthorId("");
+    setBackendAuthorName("");
+    setAuthor("");
   };
   //render
   return (
@@ -152,94 +111,82 @@ export default function Detail() {
         </div>
       </div>
       <div className="list">
-        {isShowBtn ? (
-          <div className="detail-list-cta">
-            {loader ? (
-              <MagnifyGlassLoader />
-            ) : (
+        <div className="detailcard-main">
+          <div className=" pagination-btn-filters">
+            <div className="filters flex items-start gap-4 ms-[5rem] flex-wrap">
+              <div className="flex flex-col min-w-[28rem] max-w-[28rem]  gap-1">
+                <input
+                  type="text"
+                  placeholder="Enter author name"
+                  className="border rounded-md px-3 py-2 outline-none min-w-[220px]"
+                  onChange={(e) => setAuthor(e.target.value)}
+                  value={author}
+                />
+                {backendAuthorName && (
+                  <span className="italic flex flex-wrap text-gray-400 text-xs max-w-[100%]">
+                    Showing Results for author name ={" "}
+                    <span className="text-black bg-yellow-200">
+                      {backendAuthorName}
+                    </span>
+                  </span>
+                )}
+              </div>
+
               <button
-                className="detail-list-button text-white rounded-lg"
-                onClick={handleisShowBtnClick}
+                onClick={handleClearFilteredSearch}
+                className="text-red-600 p-2 cursor-pointer hover:text-red-700"
               >
-                Show papers
+                <i className="fa-solid fa-trash  fa-xl"></i>
               </button>
-            )}
-          </div>
-        ) : (
-          <>
-            <div className="detailcard-main">
-              {!isShowBtn && (
-                <div className=" pagination-btn-filters">
-                  <div className="filters flex items-start gap-4 ms-[5rem] flex-wrap">
-                    <div className="flex flex-col min-w-[28rem]  gap-1">
-                      <input
-                        type="text"
-                        placeholder="Enter author name"
-                        className="border rounded-md px-3 py-2 outline-none min-w-[220px]"
-                        onChange={(e) => setAuthor(e.target.value)}
-                        value={author}
-                      />
-                      {backendAuthorName && (
-                        <span className="italic text-gray-400 text-xs">
-                          Showing Results for author name ={" "}
-                          <span className="text-black bg-yellow-200">
-                            {backendAuthorName}
-                          </span>
-                        </span>
-                      )}
-                    </div>
 
-                    <button
-                      onClick={handleClearFilteredSearch}
-                      className="text-red-600 p-2 cursor-pointer hover:text-red-700"
-                    >
-                      <i className="fa-solid fa-trash  fa-xl"></i>
-                    </button>
-
-                    <button
-                      onClick={handleFilteredSearchClick}
-                      className="search-btn rounded-lg"
-                    >
-                      Search
-                    </button>
-                  </div>
-                  <div>
-                    <button
-                      className={`prev-btn ${pageNum === 1 ? "disabled" : ""}`}
-                      disabled={pageNum === 1 || loader}
-                      onClick={handlePrevBtnClick}
-                    >
-                      <i className="fa-solid fa-chevron-left"></i> prev
-                    </button>
-                    <button
-                      className={`next-btn ${pageNum >= totalPages ? "disabled" : ""}`}
-                      onClick={handleNextBtnClick}
-                      disabled={pageNum >= totalPages || loader}
-                    >
-                      next <i className="fa-solid fa-chevron-right"></i>
-                    </button>
-                  </div>
-                </div>
-              )}
-              {loader ? (
-                <div className="loader-container">
-                  <MagnifyGlassLoader />
-                </div>
-              ) : (
-                <div className="detailcard-container">
-                  {data.map((paper, index) => (
-                    <DetailCard
-                      key={paper?.id ?? index}
-                      paper={paper}
-                      onOpenChat={() => setIsChatOpen(true)}
-                      backendAuthorName={backendAuthorName}
-                    />
-                  ))}
-                </div>
-              )}
+              <button
+                onClick={handleFilteredSearchClick}
+                className="search-btn rounded-lg"
+              >
+                Search
+              </button>
             </div>
-          </>
-        )}
+            <div>
+              <button
+                className={`prev-btn ${pageNum === 1 ? "disabled" : ""}`}
+                disabled={pageNum === 1 || papersQuery.isFetching}
+                onClick={handlePrevBtnClick}
+              >
+                <i className="fa-solid fa-chevron-left"></i> prev
+              </button>
+              <button
+                className={`next-btn ${pageNum >= totalPages ? "disabled" : ""}`}
+                onClick={handleNextBtnClick}
+                disabled={pageNum >= totalPages || papersQuery.isFetching}
+              >
+                next <i className="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+          {papersQuery.isLoading ? (
+            <div className="loader-container">
+              <MagnifyGlassLoader />
+            </div>
+          ) : data.length > 0 ? (
+            <div className="detailcard-container">
+              {data.map((paper, index) => (
+                <DetailCard
+                  key={paper?.id ?? index}
+                  paper={paper}
+                  onOpenChat={() => setIsChatOpen(true)}
+                  backendAuthorName={backendAuthorName}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="fallback-image">
+              <img src="/media/fields/thinking.png" alt="fallback-img" />
+              <span className="italic">
+                No papers found for author name = {author}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
       <ChatBot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </div>

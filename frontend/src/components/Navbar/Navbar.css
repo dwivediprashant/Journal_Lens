@@ -9,3 +9,6 @@
 .left-nav {
   margin-left: 70px;
 }
+.active {
+  border-bottom: 0.25px solid white;
+}

@@ -96,7 +96,7 @@
   flex-shrink: 0;
   padding: 0.5rem;
 }
-.pagination-btn-filters .prev-btn,
+.prev-btn,
 .next-btn {
   cursor: pointer;
   padding: 0.3rem 0.7rem;

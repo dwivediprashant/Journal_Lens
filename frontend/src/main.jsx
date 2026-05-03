@@ -3,13 +3,19 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import MainContextProvider from "./Contexts/MainContextProvider.jsx";
 import App from "./App.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
+const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <MainContextProvider>
-        <App />
-      </MainContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <MainContextProvider>
+          <App />
+        </MainContextProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </BrowserRouter>
   </StrictMode>,
 );

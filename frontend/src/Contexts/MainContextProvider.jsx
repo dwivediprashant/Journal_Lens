@@ -3,13 +3,8 @@ import apiClient from "../configs/apiClient";
 import { useState } from "react";
 
 export default function MainContextProvider({ children }) {
-  //main data (research papers)
-  const [data, setData] = useState([]);
-  const [metaData, setMetaData] = useState({});
-
   //research api call with optional authorId
   const callResearchApi = async (pageNum, field, authorId = "") => {
-    // setLoader(true);
     try {
       const res = await apiClient({
         method: "GET",
@@ -20,13 +15,12 @@ export default function MainContextProvider({ children }) {
           authorId: authorId,
         },
       });
-      setData(res?.data?.data?.results);
-      setMetaData(res?.data?.data?.meta);
+      return res.data?.data; // data + metadata
     } catch (error) {
       console.log(error);
       throw error;
     }
   };
-  const vals = { callResearchApi, data, setData, metaData, setMetaData };
+  const vals = { callResearchApi };
   return <MainContext.Provider value={vals}>{children}</MainContext.Provider>;
 }

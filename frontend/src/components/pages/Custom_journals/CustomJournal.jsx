@@ -3,67 +3,45 @@ import { useContext, useState } from "react";
 import MainContext from "../../../Contexts/MainContext";
 import DetailCard from "../../researchCard/DetailCard";
 import MagnifyGlassLoader from "../../loaders/MagnifyGlassLoader";
-
+import { useQuery } from "@tanstack/react-query";
 export default function CustomJournal() {
   const [searchVal, setSearchVal] = useState("");
   const [pageNum, setPageNum] = useState(1);
-  const [loader, setLoader] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
-  const { callResearchApi, data, metaData, setData, setMetaData } =
-    useContext(MainContext);
+  const [submittedQuery, setSubmittedQuery] = useState("");
+  const { callResearchApi } = useContext(MainContext);
 
-  const totalPages = metaData?.per_page
-    ? Math.ceil(metaData.count / metaData.per_page)
-    : 1;
   const query = searchVal.trim();
+  const searchQuery = useQuery({
+    queryKey: ["custom-search-papers", pageNum, submittedQuery],
+    queryFn: () => callResearchApi(pageNum, submittedQuery),
+    enabled: hasSearched && !!submittedQuery,
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 24 * 60 * 60 * 1000,
+  });
+
+  const data = searchQuery.data?.results ?? [];
+  const totalPages = searchQuery.data?.meta?.per_page
+    ? Math.ceil(searchQuery.data.meta.count / searchQuery.data.meta.per_page)
+    : 1;
 
   const handleSearchClick = async (e) => {
     e.preventDefault();
     if (!query) return;
 
-    setLoader(true);
     setHasSearched(true);
+    setSubmittedQuery(query);
     setPageNum(1);
-    setData([]);
-    setMetaData({});
-
-    try {
-      await callResearchApi(1, query);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoader(false);
-    }
   };
 
-  const handleNextBtnClick = async () => {
-    if (pageNum >= totalPages || !query) return;
-
-    const nextPage = pageNum + 1;
-    setLoader(true);
-    try {
-      setPageNum(nextPage);
-      await callResearchApi(nextPage, query);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoader(false);
-    }
+  const handleNextBtnClick = () => {
+    if (pageNum >= totalPages || !submittedQuery) return;
+    setPageNum((currentPage) => currentPage + 1);
   };
 
-  const handlePrevBtnClick = async () => {
-    if (pageNum === 1 || !query) return;
-
-    const prevPage = pageNum - 1;
-    setLoader(true);
-    try {
-      setPageNum(prevPage);
-      await callResearchApi(prevPage, query);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoader(false);
-    }
+  const handlePrevBtnClick = () => {
+    if (pageNum === 1 || !submittedQuery) return;
+    setPageNum((currentPage) => currentPage - 1);
   };
 
   return (
@@ -90,7 +68,7 @@ export default function CustomJournal() {
               <img src="/media/Idea.png" alt="fallback-img" />
               <span className="italic">You have not searched yet !</span>
             </div>
-          ) : loader ? (
+          ) : searchQuery.isFetching ? (
             <div className="loader-container">
               <MagnifyGlassLoader />
             </div>
@@ -99,7 +77,7 @@ export default function CustomJournal() {
               <div className="pagination-btn ms-auto">
                 <button
                   className={`prev-btn ${pageNum === 1 ? "disabled" : ""}`}
-                  disabled={pageNum === 1 || loader}
+                  disabled={pageNum === 1 || searchQuery.isFetching}
                   onClick={handlePrevBtnClick}
                 >
                   <i className="fa-solid fa-chevron-left"></i> prev
@@ -107,7 +85,7 @@ export default function CustomJournal() {
                 <button
                   className={`next-btn ${pageNum >= totalPages ? "disabled" : ""}`}
                   onClick={handleNextBtnClick}
-                  disabled={pageNum >= totalPages || loader}
+                  disabled={pageNum >= totalPages || searchQuery.isFetching}
                 >
                   next <i className="fa-solid fa-chevron-right"></i>
                 </button>
@@ -121,7 +99,7 @@ export default function CustomJournal() {
             </div>
           ) : (
             <div className="fallback-image">
-              <img src="/media/Idea.png" alt="fallback-img" />
+              <img src="/media/fields/thinking.png" alt="fallback-img" />
               <span className="italic">No papers found for this search.</span>
             </div>
           )}
