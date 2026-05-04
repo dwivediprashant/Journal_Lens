@@ -24,6 +24,9 @@ export default function Detail() {
   const [pageNum, setPageNum] = useState(1);
   const [backendAuthorName, setBackendAuthorName] = useState("");
 
+  //auth token
+  const { getToken } = useAuth();
+
   const papersQuery = useQuery({
     queryKey: ["papers", pageNum, field, authorId],
     queryFn: () => callResearchApi(pageNum, field, authorId),
@@ -51,7 +54,6 @@ export default function Detail() {
     if (!author) return;
 
     try {
-      const { getToken } = useAuth();
       const token = await getToken();
       const res = await apiClient({
         method: "GET",
