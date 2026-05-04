@@ -12,3 +12,12 @@
 .active {
   border-bottom: 0.25px solid white;
 }
+
+@media only screen and (max-width: 635px) {
+  .nav-logo {
+    display: none;
+  }
+  .left-nav {
+    margin: 0;
+  }
+}

@@ -31,81 +31,85 @@ export default function Footer() {
         <div className="main-wrapper">
           {/* Brand */}
 
-          <div className="brand">
-            <h2 className="text-4xl font-bold mr-5">
-              Journal<span className="text-blue-500">Lens</span>
-              <i className="fa-solid fa-magnifying-glass fa-bounce m-3"></i>
-            </h2>
+          <div className="brand_links">
+            <div className="brand">
+              <h2 className="text-4xl font-bold mr-5">
+                Journal<span className="text-blue-500">Lens</span>
+                <i className="fa-solid fa-magnifying-glass fa-bounce m-3"></i>
+              </h2>
 
-            <p className="text-black">
-              Search academic research across trusted sources in one place.
-              <span className="text-black">
-                {" "}
-                Organized & Easy accessible Journals
-              </span>
-            </p>
-          </div>
+              <p className="text-black">
+                Search academic research across trusted sources in one place.
+                <span className="text-black">
+                  {" "}
+                  Organized & Easy accessible Journals
+                </span>
+              </p>
+            </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className=" mb-3 text-blue-700">Quick Links</h3>
-            <ul className="space-y-2 ">
-              <li>
-                <Link to="/" className="hover:underline">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/journals" className="hover:underline">
-                  See Journals
-                </Link>
-              </li>
-            </ul>
+            {/* Quick Links */}
+            <div>
+              <h3 className=" mb-3 text-blue-700">Quick Links</h3>
+              <ul className="space-y-2 ">
+                <li>
+                  <Link to="/" className="hover:underline">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/journals" className="hover:underline">
+                    See Journals
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
 
           {/* Social Media */}
-          <div>
-            <div>
-              <h3 className="  mb-3 text-blue-700">Connect</h3>
-              <div className="social-media flex space-x-4">
-                <a
-                  href="https://github.com/dwivediprashant"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fa-brands fa-square-x-twitter"></i>
-                </a>
-                <a
-                  href="https://github.com/dwivediprashant"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fa-brands fa-linkedin"></i>
-                </a>
-                <a
-                  href="https://github.com/dwivediprashant"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fa-brands fa-square-github"></i>
-                </a>
-                <a href="" target="_blank" rel="noopener noreferrer">
-                  <i className="fa-brands fa-square-instagram"></i>
-                </a>
+          <div className="social_logo ">
+            <div className="social-media">
+              <div>
+                <h3 className="  mb-3 text-blue-700">Connect</h3>
+                <div className="social-media flex space-x-4">
+                  <a
+                    href="https://github.com/dwivediprashant"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="fa-brands fa-square-x-twitter"></i>
+                  </a>
+                  <a
+                    href="https://github.com/dwivediprashant"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="fa-brands fa-linkedin"></i>
+                  </a>
+                  <a
+                    href="https://github.com/dwivediprashant"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="fa-brands fa-square-github"></i>
+                  </a>
+                  <a href="" target="_blank" rel="noopener noreferrer">
+                    <i className="fa-brands fa-square-instagram"></i>
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="footer-logo">
-            <a
-              href="https://lnct.ac.in/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img src="/media/lnct.png" alt="" />
-            </a>
+            <div className="footer-logo">
+              <a
+                href="https://lnct.ac.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src="/media/lnct.png" alt="" />
+              </a>
+            </div>
           </div>
         </div>
-        <div className="api-partner min-h-[200px]">
+        <div className="api-partner ">
           <div className="api-partner-label">
             <div className="api-partner-title">API Partner</div>
             <div className="api-partner-tagline text-sm">

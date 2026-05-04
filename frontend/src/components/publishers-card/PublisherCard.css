@@ -4,7 +4,7 @@
 }
 .round-card-container {
   display: flex;
-  justify-content: start;
+  justify-content: center;
   flex-wrap: wrap;
   width: 70%;
 }
