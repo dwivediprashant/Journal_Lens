@@ -51,6 +51,7 @@ export default function Detail() {
     if (!author) return;
 
     try {
+      const { getToken } = useAuth();
       const token = await getToken();
       const res = await apiClient({
         method: "GET",
