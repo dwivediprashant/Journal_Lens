@@ -3,7 +3,9 @@ const router = express.Router();
 import axios from "axios";
 const OPENALEX_BASE_URL = process.env.OPENALEX_BASE_URL;
 const OPENALEX_API_KEY = process.env.OPENALEX_API_KEY;
+import requireAuth from "../middlewares/requireAuth.js";
 
+router.use(requireAuth);
 //1 . GET /api/author/id
 
 router.get("/id", async (req, res) => {

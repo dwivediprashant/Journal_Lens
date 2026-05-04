@@ -4,6 +4,10 @@ import axios from "axios";
 const OPENALEX_BASE_URL = process.env.OPENALEX_BASE_URL;
 const OPENALEX_API_KEY = process.env.OPENALEX_API_KEY;
 
+//auth middleware
+import requireAuth from "../middlewares/requireAuth.js";
+
+router.use(requireAuth);
 //1. GET  /api/researchpapers/
 
 router.get("/", async (req, res) => {
@@ -12,7 +16,7 @@ router.get("/", async (req, res) => {
   if (!field || !pageNum) {
     return res
       .status(400)
-      .json({ success: "false", error: "Field or Page number missing !" });
+      .json({ success: false, error: "Field or Page number missing !" });
   }
   try {
     let data = null;
@@ -36,12 +40,12 @@ router.get("/", async (req, res) => {
 
     data = response.data;
 
-    return res.status(200).json({ success: "true", data });
+    return res.status(200).json({ success: true, data });
   } catch (error) {
     // console.log(error);
     return res
       .status(500)
-      .json({ success: "false", error: "Failed to fetch research papers" });
+      .json({ success: false, error: "Failed to fetch research papers" });
   }
 });
 
