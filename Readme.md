@@ -8,6 +8,46 @@ Designed for an academic workflow, the platform helps students, researchers, and
 
 https://journal-lens.vercel.app/
 
+## Snapshots
+ - Home page
+   
+   <img width="1366" height="768" alt="Screenshot (31)" src="https://github.com/user-attachments/assets/6a771cd3-081b-448d-829f-d7d7cb888290" />
+
+ - Provider cards
+
+<img width="1366" height="768" alt="Screenshot (32)" src="https://github.com/user-attachments/assets/bce9dc5a-a8da-4fb9-b573-ce3b62b984d3" />
+
+- Footer
+  
+  <img width="1366" height="768" alt="Screenshot (33)" src="https://github.com/user-attachments/assets/d4da0ddf-1d04-44d4-8854-6b9e98dc420e" />
+
+  - Topics page
+    
+    <img width="1366" height="768" alt="Screenshot (34)" src="https://github.com/user-attachments/assets/88351933-4a33-44f5-8580-87e340a76587" />
+
+  - Papers under specific topic
+    
+    <img width="1366" height="768" alt="Screenshot (35)" src="https://github.com/user-attachments/assets/60846f1d-4867-4edf-bc4b-13f67a93bc6a" />
+
+  - Research paper overview card
+    
+    <img width="1366" height="768" alt="Screenshot (36)" src="https://github.com/user-attachments/assets/a61eddd5-c2c8-495b-a1c3-e10ba8aeccb3" />
+
+- Detailing page
+
+  <img width="1366" height="768" alt="Screenshot (37)" src="https://github.com/user-attachments/assets/b548e5d7-0ab3-49ea-955d-0235148ee74d" />
+
+- Chatbot sidebar
+
+  <img width="1366" height="768" alt="Screenshot (38)" src="https://github.com/user-attachments/assets/12b31b35-51ec-4df9-987e-f39c37364399" />
+  
+
+
+
+
+
+
+
 ## Features
 
 - Browse journals and open-access research papers in a structured UI.
