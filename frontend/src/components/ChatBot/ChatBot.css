@@ -57,6 +57,19 @@
   padding: 8px 12px;
   border-radius: 12px;
   font-size: 0.9rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.msg-icon {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.msg-icon-wrap {
+  display: inline-flex;
+  align-items: center;
 }
 
 .chat-message.bot {
