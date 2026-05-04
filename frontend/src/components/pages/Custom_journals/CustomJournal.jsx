@@ -47,7 +47,7 @@ export default function CustomJournal() {
   return (
     <div className="main">
       <div className="search-main p-2 ">
-        <form className="w-[50%] flex" onSubmit={handleSearchClick}>
+        <form className="inp-form w-[50%] flex" onSubmit={handleSearchClick}>
           <input
             type="text"
             placeholder="Search papers using simple text ..."

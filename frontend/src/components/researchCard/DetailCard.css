@@ -114,3 +114,17 @@
   color: black;
   font-style: italic;
 }
+
+@media only screen and (max-width: 600px) {
+  .source-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .oa-status,
+  .source,
+  .host {
+    margin: 0;
+  }
+}

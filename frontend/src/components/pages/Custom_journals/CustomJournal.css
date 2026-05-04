@@ -29,3 +29,21 @@
 .fallback-image img {
   height: 20rem;
 }
+
+@media only screen and (max-width: 1040px) {
+  .detailcard-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media only screen and (max-width: 770px) {
+  .detailcard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .inp-form {
+    width: 90%;
+  }
+}
