@@ -95,12 +95,11 @@ export default function Detail() {
       </div>
 
       <div className="detail-list-title text-3xl m-3">
-        <span className="text-blue-700">{field}'s</span> research papers
+        <span className="text-blue-700 me-2">{field}'s</span> research papers
       </div>
 
       <div className="list">
         <div className="detailcard-main">
-
           {/* Filters + Pagination */}
           <div className="pagination-btn-filters">
             <div className="filters flex items-start gap-4 ms-[5rem] flex-wrap">

@@ -1,6 +1,7 @@
 import "./Navbar.css";
 import { Link } from "react-router";
 import { useLocation } from "react-router";
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react";
 
 export default function Navbar() {
   const location = useLocation();
@@ -32,8 +33,19 @@ export default function Navbar() {
         </div>
       </div>
       <div className="right ms-auto flex mr-4">
-        <div>Register</div>
-        <div>Login</div>
+        <div>
+          <Show when="signed-out">
+            <SignUpButton mode="modal" fallbackRedirectUrl="/">
+              <button className="cursor-pointer">
+                Signup{" "}
+                <i className="fa-solid fa-right-to-bracket ms-2 fa-lg "></i>
+              </button>
+            </SignUpButton>
+          </Show>
+          <Show when="signed-in">
+            <UserButton />
+          </Show>
+        </div>
       </div>
     </section>
   );
