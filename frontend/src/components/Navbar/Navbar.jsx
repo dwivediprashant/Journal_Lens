@@ -42,9 +42,11 @@ export default function Navbar() {
               </button>
             </SignUpButton>
           </Show>
-          <Show when="signed-in">
-            <UserButton />
-          </Show>
+          <div className="rounded-[50%] bg-white">
+            <Show when="signed-in">
+              <UserButton />
+            </Show>
+          </div>
         </div>
       </div>
     </section>

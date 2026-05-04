@@ -93,17 +93,26 @@
     margin-left: auto;
   }
 
+  .search-btn {
+    font-size: x-small;
+  }
   .filters {
     display: flex;
-    flex-direction: row;
     margin: 0;
     align-items: center;
-    flex-wrap: nowrap;
-    gap: 1rem;
   }
   .detail-list-title {
     white-space: nowrap;
     font-size: large;
+  }
+  .input-field {
+    width: 75%;
+    margin: 0;
+    padding: 0;
+  }
+  .pagination-btn .prev-btn,
+  .pagination-btn .next-btn {
+    font-size: small;
   }
 }
 
