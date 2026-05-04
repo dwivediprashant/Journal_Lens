@@ -8,6 +8,7 @@ import { useContext } from "react";
 import MainContext from "../../../Contexts/MainContext";
 import { useQuery } from "@tanstack/react-query";
 import MagnifyGlassLoader from "../../loaders/MagnifyGlassLoader";
+import { useAuth } from "@clerk/react";
 
 export default function Detail() {
   const { callResearchApi } = useContext(MainContext);
@@ -48,11 +49,16 @@ export default function Detail() {
   const handleFilteredSearchClick = async (e) => {
     e.preventDefault();
     if (!author) return;
+
     try {
+      const token = await getToken();
       const res = await apiClient({
         method: "GET",
         url: "/author/id",
         params: { author },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       if (res.status !== 200) return;
       const resolvedAuthorId =
