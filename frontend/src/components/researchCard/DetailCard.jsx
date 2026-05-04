@@ -70,16 +70,16 @@ export default function DetailCard({
             <i className="fa-solid fa-book"></i> Source details
           </div>
 
-          <div className="flex  w-full">
+          <div className="source-info flex  w-full">
             <div>
               <img src={logoUrl} alt="company-logo" className="company-logo" />
               <div className=" text-gray-600 text-xs italic">HOST LOGO</div>
             </div>
-            <div className="flex flex-col">
-              <div className="ms-3">
+            <div className=" flex flex-col">
+              <div className="source ms-3">
                 <span className="text-blue-800">Source</span> : {source}
               </div>
-              <div className="ms-3">
+              <div className="host ms-3">
                 <span className="text-blue-800">Hosted at : </span>
                 {domain.length > 0 ? (
                   <a

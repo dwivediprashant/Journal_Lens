@@ -23,7 +23,7 @@ export default function Journals() {
   return (
     <div className="journals-container">
       <div className="search-wrap p-2 ">
-        <div className="w-[50%] flex">
+        <div className="input-field w-[50%] flex">
           <input
             type="text"
             placeholder="Search by field names medicine, law ..."
@@ -36,8 +36,8 @@ export default function Journals() {
           </div>
         </div>
       </div>
-      <div className="journals-wrapper">
-        <div className="journals mt-5">
+      <div id="journals-wrapper" className="journals-wrapper">
+        <div id="journals" className="journals mt-5">
           {searchVal && searchVal.length > 0 ? (
             searchedJournals.length > 0 ? (
               searchedJournals.map((card) => (

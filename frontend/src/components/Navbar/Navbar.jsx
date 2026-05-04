@@ -9,7 +9,7 @@ export default function Navbar() {
   return (
     <section className="Navbar p-3 text-white">
       <div className="left-nav flex items-center">
-        <div>
+        <div className="nav-logo">
           <h2 className="font-semibold mr-5">
             Journal<span className="text-blue-300">Lens</span>
             <i className="fa-solid fa-magnifying-glass ms-1"></i>

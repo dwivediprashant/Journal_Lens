@@ -111,12 +111,12 @@ export default function Detail() {
         <div className="detailcard-main">
           {/* Filters + Pagination */}
           <div className="pagination-btn-filters">
-            <div className="filters flex items-start gap-4 ms-[5rem] flex-wrap">
-              <div className="flex flex-col min-w-[28rem] max-w-[28rem] gap-1">
+            <div className="filters flex items-center gap-4 ms-[5rem] flex-nowrap">
+              <div className="input-field flex flex-col gap-1">
                 <input
                   type="text"
                   placeholder="Enter author name"
-                  className="border rounded-md px-3 py-2 outline-none min-w-[220px]"
+                  className="border rounded-md px-3 py-2 outline-none "
                   onChange={(e) => setAuthor(e.target.value)}
                   value={author}
                 />
@@ -130,22 +130,24 @@ export default function Detail() {
                 )}
               </div>
 
-              <button
-                onClick={handleClearFilteredSearch}
-                className="text-red-600 p-2 cursor-pointer hover:text-red-700"
-              >
-                <i className="fa-solid fa-trash fa-xl"></i>
-              </button>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  onClick={handleClearFilteredSearch}
+                  className="text-red-600 p-2 cursor-pointer hover:text-red-700"
+                >
+                  <i className="fa-solid fa-trash fa-xl"></i>
+                </button>
 
-              <button
-                onClick={handleFilteredSearchClick}
-                className="search-btn rounded-lg"
-              >
-                Search
-              </button>
+                <button
+                  onClick={handleFilteredSearchClick}
+                  className="search-btn rounded-lg"
+                >
+                  Search
+                </button>
+              </div>
             </div>
 
-            <div>
+            <div className="pagination-btn">
               <button
                 className={`prev-btn ${pageNum === 1 ? "disabled" : ""}`}
                 disabled={pageNum === 1 || papersQuery.isFetching}
