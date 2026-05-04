@@ -21,15 +21,6 @@
   justify-content: center;
   min-height: 50vh;
 }
-
-.detailcard-container {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  width: 80%;
-  margin: 1rem;
-  align-items: stretch;
-}
 .detailcard-main {
   display: flex;
   flex-direction: column;
@@ -39,6 +30,7 @@
   min-height: 60vh;
   gap: 1rem;
 }
+
 .detail-list-title {
   display: flex;
   /* flex-direction: column; */
@@ -67,12 +59,6 @@
   transition: 0.25s;
 }
 
-@media (max-width: 768px) {
-  .detailcard-container {
-    grid-template-columns: 1fr;
-    width: 100%;
-  }
-}
 .top-details {
   display: flex;
   flex-direction: column;
@@ -95,6 +81,42 @@
   min-height: 3rem;
   flex-shrink: 0;
   padding: 0.5rem;
+}
+
+@media only screen and (max-width: 975px) {
+  .journal-details .detailcard-container > div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .journal-details .detail-card-wrapper {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .pagination-btn-filters {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+  .pagination-btn {
+    margin-left: auto;
+  }
+
+  .filters {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 1rem;
+  }
+  .detail-list-title {
+    white-space: nowrap;
+    font-size: large;
+  }
 }
 .prev-btn,
 .next-btn {
@@ -137,4 +159,14 @@ i {
 }
 .search-btn:hover {
   background-color: rgba(0, 0, 255, 0.75);
+}
+
+.journal-details .detailcard-container {
+  width: 100%;
+}
+
+.journal-details .detailcard-container > div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }

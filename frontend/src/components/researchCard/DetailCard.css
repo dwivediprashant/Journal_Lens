@@ -40,8 +40,10 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 0.95rem;
-  align-items: center;
+  align-items: stretch;
+  justify-content: flex-start;
 }
 .detail-card-wrapper .title {
   justify-content: flex-start;
