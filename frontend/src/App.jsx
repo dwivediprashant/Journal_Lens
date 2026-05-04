@@ -1,5 +1,6 @@
 import "./App.css";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import Footer from "./components/Footer/Footer";
 import Hero from "./components/Hero/Hero";
 import Navbar from "./components/Navbar/Navbar";
@@ -46,6 +47,7 @@ function App() {
 
       <Footer />
       <Analytics />
+      <SpeedInsights />
     </div>
   );
 }
