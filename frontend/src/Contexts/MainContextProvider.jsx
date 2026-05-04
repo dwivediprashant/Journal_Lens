@@ -1,6 +1,5 @@
 import MainContext from "./MainContext";
 import apiClient from "../configs/apiClient";
-import { useState } from "react";
 import { useAuth } from "@clerk/react";
 
 export default function MainContextProvider({ children }) {
@@ -9,15 +8,18 @@ export default function MainContextProvider({ children }) {
   const callResearchApi = async (pageNum, field, authorId = "") => {
     try {
       const token = await getToken();
+      const params = {
+        field,
+        pageNum,
+      };
 
+      if (authorId && authorId.length > 0) {
+        params.authorId = authorId;
+      }
       const res = await apiClient({
         method: "GET",
         url: "/researchpapers",
-        params: {
-          field: field,
-          pageNum: pageNum,
-          authorId: authorId,
-        },
+        params,
         headers: {
           Authorization: `Bearer ${token}`,
         },
