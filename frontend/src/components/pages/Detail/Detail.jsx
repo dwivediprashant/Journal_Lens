@@ -172,19 +172,17 @@ export default function Detail() {
             </div>
           ) : data.length > 0 ? (
             <div className="detailcard-container">
-              <div>
-                {data.map((paper, index) => (
-                  <DetailCard
-                    key={paper?.id ?? index}
-                    paper={paper}
-                    onOpenChat={() => {
-                      setSelectedPaper(paper);
-                      setIsChatOpen(true);
-                    }}
-                    backendAuthorName={backendAuthorName}
-                  />
-                ))}
-              </div>
+              {data.map((paper, index) => (
+                <DetailCard
+                  key={paper?.id ?? index}
+                  paper={paper}
+                  onOpenChat={() => {
+                    setSelectedPaper(paper);
+                    setIsChatOpen(true);
+                  }}
+                  backendAuthorName={backendAuthorName}
+                />
+              ))}
             </div>
           ) : (
             <div className="fallback-image">
