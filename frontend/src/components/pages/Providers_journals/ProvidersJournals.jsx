@@ -1,0 +1,190 @@
+import React, { useState } from "react";
+import "./ProvidersJournals.css";
+import apiClient from "../../../configs/apiClient";
+import { useQuery } from "@tanstack/react-query";
+import ProgressBarLoader from "../../loaders/ProgressBarLoader";
+
+import CountsByYear from "../../CountsByYear/CountsByYear";
+
+export default function ProvidersJournals() {
+  const [page, setPage] = useState(1);
+  const [selectedPublisher, setSelectedPublisher] = useState(null);
+
+  const fetchProviders = async ({ queryKey }) => {
+    const [, currentPage] = queryKey;
+
+    try {
+      const res = await apiClient({
+        method: "GET",
+        url: "/providers",
+        params: {
+          page: currentPage,
+          per_page: 25,
+        },
+      });
+
+      return res.data?.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ["providers-journals", page],
+    queryFn: fetchProviders,
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 24 * 60 * 60 * 1000,
+  });
+
+  const currentPage = data?.meta?.page ?? page;
+  const totalPages =
+    Math.ceil((data?.meta?.count ?? 0) / (data?.meta?.per_page ?? 25)) || 1;
+
+  const handlePrevClick = () => {
+    if (currentPage > 1) {
+      setPage(currentPage - 1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (currentPage < totalPages) {
+      setPage(currentPage + 1);
+    }
+  };
+
+  const handlePublisherCardClick = (publisher) => {
+    setSelectedPublisher(publisher);
+  };
+
+  const summaryStats = selectedPublisher?.summary_stats ?? {};
+  const summaryStatsList = Object.entries(summaryStats);
+  const countsByYear = selectedPublisher?.counts_by_year ?? [];
+  const selectedPublisherImage =
+    selectedPublisher?.image_thumbnail_url ??
+    selectedPublisher?.image_url ??
+    "/media/publishers/openalex.png";
+
+  return (
+    <div className="providers-page">
+      <div className="providers-controls">
+        <div className="me-10 font-semibold">
+          Page : {currentPage} / {totalPages}
+        </div>
+        <div>
+          <button
+            type="button"
+            onClick={handlePrevClick}
+            disabled={currentPage <= 1}
+            className="me-5"
+          >
+            Prev
+          </button>
+          <button
+            type="button"
+            onClick={handleNextClick}
+            disabled={currentPage >= totalPages}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      {(isLoading || isFetching) && (
+        <div className="providers-loader">
+          <ProgressBarLoader />
+        </div>
+      )}
+
+      <div className="providers-layout">
+        <div className="providers-left">
+          <div
+            className="providers-carousel"
+            aria-label="Publisher profile cards"
+          >
+            {data?.results?.map((publisher, idx) => {
+              const imageSrc =
+                publisher?.image_thumbnail_url ??
+                publisher?.image_url ??
+                "/media/publishers/openalex.png";
+
+              return (
+                <div
+                  className={`publisher-card ${
+                    selectedPublisher?.id === publisher?.id ? "active" : ""
+                  }`}
+                  key={idx}
+                  onClick={() => handlePublisherCardClick(publisher)}
+                >
+                  <div className="publisher-card-image">
+                    <img src={imageSrc} alt={publisher?.display_name} />
+                  </div>
+                  <div className="publisher-card-title">
+                    {publisher?.display_name}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="provider-journals-panel">
+            <div className="provider-info-wrapper">
+              <div className="provider-info-panel">
+                {selectedPublisher && (
+                  <>
+                    <div className="provider-info-header">
+                      <img
+                        src={selectedPublisherImage}
+                        alt={selectedPublisher?.display_name}
+                      />
+                      <div className="provider-info-content">
+                        <h3 className="selected-provider-title">
+                          {selectedPublisher?.display_name || "Provider Stats"}
+                        </h3>
+
+                        <div className="top-intro">
+                          <div className="left ">
+                            <div className="provider-stat-item">
+                              <span>Works count :</span>&nbsp;
+                              <strong>
+                                {selectedPublisher?.works_count ?? "-"}
+                              </strong>
+                            </div>
+
+                            <div className="provider-stat-item">
+                              <span>Cited by : </span>&nbsp;
+                              <strong>
+                                {selectedPublisher?.cited_by_count ?? "-"}
+                              </strong>
+                            </div>
+                          </div>
+
+                          <div className="summary-stats-list">
+                            {summaryStatsList.length > 0 ? (
+                              summaryStatsList.map(([key, value]) => (
+                                <div className="summary-stats-item" key={key}>
+                                  <span>{key} : </span>&nbsp;
+                                  <strong>{value}</strong>
+                                </div>
+                              ))
+                            ) : (
+                              <p>No summary stats available.</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="provider-stat-block provider-counts-block">
+                      <h4>YEAR WISE INFORMATION</h4>
+                      <CountsByYear countsByYear={countsByYear} />
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

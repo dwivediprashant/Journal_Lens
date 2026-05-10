@@ -10,6 +10,8 @@ import Detail from "./components/pages/Detail/Detail";
 import MoreDetail from "./components/pages/More_detail/MoreDetail";
 import CustomJournal from "./components/pages/Custom_journals/CustomJournal";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
+import { ScrollIndicator } from "react-scroll-progress-tracker";
+import ProvidersJournals from "./components/pages/Providers_journals/ProvidersJournals";
 
 function App() {
   return (
@@ -43,11 +45,20 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/providers"
+          element={
+            <ProtectedRoute>
+              <ProvidersJournals />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       <Footer />
       <Analytics />
       <SpeedInsights />
+      <ScrollIndicator />
     </div>
   );
 }

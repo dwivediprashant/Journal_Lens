@@ -15,21 +15,31 @@ export default function Navbar() {
             <i className="fa-solid fa-magnifying-glass ms-1"></i>
           </h2>
         </div>
-        <div>
-          <Link
-            className={`${location.pathname === "/" ? "active" : ""}`}
-            to="/"
-          >
-            Home
-          </Link>
-        </div>
-        <div>
-          <Link
-            className={`${location.pathname === "/journals" ? "active" : ""}`}
-            to="/journals"
-          >
-            Journals
-          </Link>
+        <div className="flex gap-3">
+          <div>
+            <Link
+              className={`${location.pathname === "/" ? "active" : ""}`}
+              to="/"
+            >
+              Home
+            </Link>
+          </div>
+          <div>
+            <Link
+              className={`${location.pathname === "/journals" ? "active" : ""}`}
+              to="/journals"
+            >
+              Journals
+            </Link>
+          </div>
+          <div>
+            <Link
+              className={`${location.pathname === "/providers" ? "active" : ""}`}
+              to="/providers"
+            >
+              Providers
+            </Link>
+          </div>
         </div>
       </div>
       <div className="right ms-auto flex mr-4">
