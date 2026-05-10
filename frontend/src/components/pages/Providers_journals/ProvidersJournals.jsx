@@ -125,7 +125,14 @@ export default function ProvidersJournals() {
               );
             })}
           </div>
-
+          {!selectedPublisher && (
+            <div className="fallback-image">
+              <img src="/media/fields/thinking.png" alt="fallback-image" />
+              <p className="italic text-gray-800">
+                Select any one publisher from above to see information
+              </p>
+            </div>
+          )}
           <div className="provider-journals-panel">
             <div className="provider-info-wrapper">
               <div className="provider-info-panel">
