@@ -1,9 +1,8 @@
 import "./RoundCard.css";
 import { Link } from "react-router";
-
-export default function RoundCard({ title, src }) {
+export default function RoundCard({ id, title, src }) {
   return (
-    <Link to={"/providers"}>
+    <Link to={`/providers/${id}`}>
       <div className="round-card">
         <img src={src} alt="" />
         <div className="round-card-title">{title}</div>

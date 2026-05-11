@@ -116,9 +116,12 @@
 }
 
 .provider-counts-block {
-  padding: 0 28px 0;
   margin-top: 0.75rem;
   margin-bottom: 0;
+  background-color: #222222c7;
+  padding: 0.5rem;
+  color: white;
+  width: 30%;
 }
 
 .summary-stats-list {
@@ -138,11 +141,7 @@
   color: blue;
 }
 
-.provider-stat-block {
-  margin-top: 1rem;
-}
-
-.provider-stat-block p {
+.provider-counts-block p {
   margin: 0;
   color: #334155;
 }
@@ -211,6 +210,18 @@
   justify-content: center;
 }
 
+.provider-papers {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-right: 0.05px dashed black;
+  padding: 0 1rem 0 0;
+  width: 50%;
+}
+.provider-papers-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: start;
+}
 @media (max-width: 900px) {
   .providers-layout {
     grid-template-columns: 1fr;

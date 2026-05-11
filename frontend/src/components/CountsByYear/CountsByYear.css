@@ -1,6 +1,7 @@
 .count-by-year-wrapper {
-  display: flex;
-  /* justify-content: space-around; */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
   align-items: center;
   gap: 0.25rem;
   flex-wrap: wrap;
@@ -11,7 +12,7 @@
   padding: 0.75rem;
   border-radius: 0.5rem;
   margin: 0.35rem;
-  background-color: #22222211;
+  background-color: white;
 }
 .label {
   color: rgb(7, 7, 216);

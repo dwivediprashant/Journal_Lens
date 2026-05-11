@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import ProgressBarLoader from "../../loaders/ProgressBarLoader";
 
 import CountsByYear from "../../CountsByYear/CountsByYear";
+import ProvidersPaper from "./Providers_papers/ProvidersPaper";
 
 export default function ProvidersJournals() {
   const [page, setPage] = useState(1);
@@ -64,6 +65,7 @@ export default function ProvidersJournals() {
     selectedPublisher?.image_url ??
     "/media/publishers/openalex.png";
 
+  const selectedPublisherId = selectedPublisher?.id.split("/").pop();
   return (
     <div className="providers-page">
       <div className="providers-controls">
@@ -180,10 +182,22 @@ export default function ProvidersJournals() {
                         </div>
                       </div>
                     </div>
-
-                    <div className="provider-stat-block provider-counts-block">
-                      <h4>YEAR WISE INFORMATION</h4>
-                      <CountsByYear countsByYear={countsByYear} />
+                    <h4 className="text-2xl font-semibold m-4">
+                      Journals under &nbsp;
+                      <span className="text-red-800 italic">
+                        {selectedPublisher.display_name}
+                      </span>
+                    </h4>
+                    <div className="provider-papers-wrapper">
+                      <div className="provider-papers ">
+                        <ProvidersPaper providerId={selectedPublisherId} />
+                      </div>
+                      <div className="provider-counts-block">
+                        <h4 className="underline m-3 text-xl underline-offset-4">
+                          Year wise stats
+                        </h4>
+                        <CountsByYear countsByYear={countsByYear} />
+                      </div>
                     </div>
                   </>
                 )}

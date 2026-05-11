@@ -14,6 +14,7 @@ import CustomJournal from "./components/pages/Custom_journals/CustomJournal";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { ScrollIndicator } from "react-scroll-progress-tracker";
 import ProvidersJournals from "./components/pages/Providers_journals/ProvidersJournals";
+import ProvidersPaper from "./components/pages/Providers_journals/Providers_papers/ProvidersPaper";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -63,6 +64,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ProvidersJournals />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/providers/:id"
+          element={
+            <ProtectedRoute>
+              <ProvidersPaper />
             </ProtectedRoute>
           }
         />
