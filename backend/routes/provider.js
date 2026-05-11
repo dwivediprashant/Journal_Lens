@@ -4,6 +4,11 @@ import axios from "axios";
 const OPENALEX_BASE_URL = process.env.OPENALEX_BASE_URL;
 const OPENALEX_API_KEY = process.env.OPENALEX_API_KEY;
 
+//auth middleware
+import requireAuth from "../middlewares/requireAuth.js";
+
+router.use(requireAuth);
+
 //1.  GET /api/providers/  : all providers/publishers brief information
 router.get("/", async (req, res) => {
   try {
@@ -28,7 +33,38 @@ router.get("/", async (req, res) => {
   }
 });
 
+//2. /api/providers/:providerId => get all things as 1. GET /api/providers/  but for only one publisher(provider) not list of all providers
 router.get("/:providerId", async (req, res) => {
+  const { providerId } = req.params;
+
+  if (!providerId) {
+    return res
+      .status(400)
+      .json({ success: false, error: "Provider ID missing !" });
+  }
+
+  try {
+    let reponse = await axios.get(
+      `${OPENALEX_BASE_URL}/publishers/${providerId}`,
+      {
+        params: {
+          api_key: OPENALEX_API_KEY,
+          select:
+            "id,display_name,image_thumbnail_url,image_url,works_count,cited_by_count,summary_stats,counts_by_year",
+        },
+      },
+    );
+
+    reponse = reponse.data;
+
+    return res.status(200).json({ success: true, data: reponse });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+//3 . GET /api/providers/sources/:providerId  => get sources/journals by providerID
+router.get("/sources/:providerId", async (req, res) => {
   const { providerId } = req.params;
 
   if (!providerId) {
