@@ -6,6 +6,10 @@
   box-shadow: 0 0 8px gray;
   background: #fff;
   padding: 0.5rem;
+  transition: 0.36s;
+}
+.round-card img:hover {
+  box-shadow: 0 0 15px black;
 }
 .round-card {
   display: flex;

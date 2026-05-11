@@ -1,0 +1,112 @@
+.journal-card {
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  padding: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.journal-card-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #cbd5e1;
+  padding-bottom: 0.6rem;
+  background-color: #0f172a;
+}
+
+.journal-card-title {
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  color: white;
+  font-size: larger;
+  font-weight: 700;
+  padding: 0 0.75rem 0 0.75rem;
+}
+
+.journal-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.journal-card-row,
+.journal-summary-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.35rem 0;
+}
+
+.journal-card-label {
+  color: #1d4ed8;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.journal-card-value {
+  color: #111827;
+  text-align: right;
+}
+
+.journal-card-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.25rem;
+}
+
+.journal-card-subtitle {
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.journal-summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.journal-summary-item:last-child {
+  border-bottom: 0;
+}
+
+.journal-card-footer {
+  padding-top: 0.2rem;
+}
+
+.journal-card-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #0f172a;
+  color: #0f172a;
+  text-decoration: none;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.journal-card-empty {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.journal-card-link:hover {
+  background: #0f172a;
+  color: #fff;
+}
+.open-access-status-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.open-access-status-badge img {
+  height: 50px;
+  width: 50px;
+}

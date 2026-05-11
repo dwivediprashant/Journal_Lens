@@ -6,6 +6,7 @@ import corsOptions from "./configs/corsOptions.js";
 import chatRoutes from "./routes/chat.js";
 import researchpapersRoute from "./routes/researchpapers.js";
 import authorRoute from "./routes/author.js";
+import providerRoute from "./routes/provider.js";
 import { clerkMiddleware } from "@clerk/express";
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(clerkMiddleware());
 app.use("/api/chat", chatRoutes);
 app.use("/api/researchpapers", researchpapersRoute);
 app.use("/api/author", authorRoute);
+app.use("/api/providers", providerRoute);
 
 app.get("/", (req, res) => {
   res.json({ status: "success", msg: "Backend start" });
