@@ -33,7 +33,34 @@ router.get("/", async (req, res) => {
   }
 });
 
-//2. /api/providers/:providerId => get all things as 1. GET /api/providers/  but for only one publisher(provider) not list of all providers
+//2 . GET /api/providers/sources/:providerId  => get sources/journals by providerID
+router.get("/sources/:providerId", async (req, res) => {
+  const { providerId } = req.params;
+
+  if (!providerId) {
+    return res
+      .status(400)
+      .json({ success: false, error: "Provider ID missing !" });
+  }
+
+  try {
+    let response = await axios.get(`${OPENALEX_BASE_URL}/sources`, {
+      params: {
+        filter: `host_organization:${providerId},is_oa:true,type:journal`,
+        select: `display_name,issn_l,works_count,cited_by_count,summary_stats,is_oa,apc_usd,homepage_url`,
+        api_key: OPENALEX_API_KEY,
+      },
+    });
+
+    response = response.data;
+
+    return res.status(200).json({ success: true, data: response });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+//3. /api/providers/:providerId => get all things as 1. GET /api/providers/  but for only one publisher(provider) not list of all providers
 router.get("/:providerId", async (req, res) => {
   const { providerId } = req.params;
 
@@ -63,30 +90,4 @@ router.get("/:providerId", async (req, res) => {
   }
 });
 
-//3 . GET /api/providers/sources/:providerId  => get sources/journals by providerID
-router.get("/sources/:providerId", async (req, res) => {
-  const { providerId } = req.params;
-
-  if (!providerId) {
-    return res
-      .status(400)
-      .json({ success: false, error: "Provider ID missing !" });
-  }
-
-  try {
-    let response = await axios.get(`${OPENALEX_BASE_URL}/sources`, {
-      params: {
-        filter: `host_organization:${providerId},is_oa:true,type:journal`,
-        select: `display_name,issn_l,works_count,cited_by_count,summary_stats,is_oa,apc_usd,homepage_url`,
-        api_key: OPENALEX_API_KEY,
-      },
-    });
-
-    response = response.data;
-
-    return res.status(200).json({ success: true, data: response });
-  } catch (error) {
-    return res.status(500).json({ success: false, error: error.message });
-  }
-});
 export default router;
