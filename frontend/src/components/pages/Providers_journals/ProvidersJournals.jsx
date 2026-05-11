@@ -3,6 +3,7 @@ import "./ProvidersJournals.css";
 import apiClient from "../../../configs/apiClient";
 import { useQuery } from "@tanstack/react-query";
 import ProgressBarLoader from "../../loaders/ProgressBarLoader";
+import { useAuth } from "@clerk/react";
 
 import CountsByYear from "../../CountsByYear/CountsByYear";
 import ProvidersPaper from "./Providers_papers/ProvidersPaper";
@@ -10,11 +11,13 @@ import ProvidersPaper from "./Providers_papers/ProvidersPaper";
 export default function ProvidersJournals() {
   const [page, setPage] = useState(1);
   const [selectedPublisher, setSelectedPublisher] = useState(null);
+  const { getToken } = useAuth();
 
   const fetchProviders = async ({ queryKey }) => {
     const [, currentPage] = queryKey;
 
     try {
+      const token = await getToken();
       const res = await apiClient({
         method: "GET",
         url: "/providers",
@@ -22,11 +25,15 @@ export default function ProvidersJournals() {
           page: currentPage,
           per_page: 25,
         },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       return res.data?.data;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 

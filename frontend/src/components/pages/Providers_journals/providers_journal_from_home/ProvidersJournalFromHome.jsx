@@ -4,21 +4,32 @@ import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import ProgressBarLoader from "../../../loaders/ProgressBarLoader";
 import CountsByYear from "../../../CountsByYear/CountsByYear";
+import { useAuth } from "@clerk/react";
 import "../ProvidersJournals.css";
 import ProvidersPaper from "../Providers_papers/ProvidersPaper";
 
 export default function ProvidersJournalFromHome() {
   const { id } = useParams();
+  const { getToken } = useAuth();
 
   const fetchProvider = async ({ queryKey }) => {
     const [, providerId] = queryKey;
 
-    const res = await apiClient({
-      method: "GET",
-      url: `/providers/${providerId}`,
-    });
+    try {
+      const token = await getToken();
+      const res = await apiClient({
+        method: "GET",
+        url: `/providers/${providerId}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    return res.data?.data;
+      return res.data?.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   };
 
   const { data, isLoading, isFetching } = useQuery({

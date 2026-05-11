@@ -4,19 +4,28 @@ import apiClient from "../../../../configs/apiClient";
 import { useQuery } from "@tanstack/react-query";
 import ProgressBarLoader from "../../../loaders/ProgressBarLoader";
 import JournalCard from "./journal_card/JournalCard";
+import { useAuth } from "@clerk/react";
 
 export default function ProvidersPaper({ providerId }) {
+  const { getToken } = useAuth();
+
   const fetchProvidersPapers = async ({ queryKey }) => {
     const [, providerId] = queryKey;
+
     try {
+      const token = await getToken();
       const res = await apiClient({
         method: "GET",
         url: `/providers/sources/${providerId}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       return res.data?.data;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 
