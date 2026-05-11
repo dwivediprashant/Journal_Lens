@@ -41,7 +41,7 @@ router.get("/:providerId", async (req, res) => {
     let response = await axios.get(`${OPENALEX_BASE_URL}/sources`, {
       params: {
         filter: `host_organization:${providerId},is_oa:true,type:journal`,
-        select: `display_name,issn_l,works_count,cited_by_count,summary_stats,apc_usd,homepage_url`,
+        select: `display_name,issn_l,works_count,cited_by_count,summary_stats,is_oa,apc_usd,homepage_url`,
         api_key: OPENALEX_API_KEY,
       },
     });
