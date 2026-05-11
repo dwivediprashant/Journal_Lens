@@ -19,14 +19,18 @@ export default function Hero() {
             world today.
           </p>
           <div className="hero-banner__actions">
-            <Link className="hero-banner__cta" to="/journals">
-              <span>Explore Journals</span>
+            <Link className="hero-banner__cta" to="/providers">
+              <span>Explore publisher's journals</span>
+              <i className="fa-solid fa-sheet-plastic" />
+            </Link>
+            <Link className="hero-banner__cta ms-5" to="/journals">
+              <span>Explore topic-wise journals</span>
               <i className="fa-solid fa-sheet-plastic" />
             </Link>
           </div>
         </div>
       </section>
-      <div className="flex justify-around p-5">
+      <div className="flex justify-around items-center p-5">
         <PublisherCard />
       </div>
     </>

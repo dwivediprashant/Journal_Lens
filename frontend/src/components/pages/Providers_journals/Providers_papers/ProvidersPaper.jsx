@@ -4,18 +4,14 @@ import apiClient from "../../../../configs/apiClient";
 import { useQuery } from "@tanstack/react-query";
 import ProgressBarLoader from "../../../loaders/ProgressBarLoader";
 import JournalCard from "./journal_card/JournalCard";
-import { useParams } from "react-router";
 
-export default function ProvidersPaper({ providerId: providerIdFromProp }) {
-  const { id: providerIdFromParams } = useParams();
-  const providerId = providerIdFromProp || providerIdFromParams;
-
+export default function ProvidersPaper({ providerId }) {
   const fetchProvidersPapers = async ({ queryKey }) => {
     const [, providerId] = queryKey;
     try {
       const res = await apiClient({
         method: "GET",
-        url: `/providers/${providerId}`,
+        url: `/providers/sources/${providerId}`,
       });
 
       return res.data?.data;
@@ -43,10 +39,11 @@ export default function ProvidersPaper({ providerId: providerIdFromProp }) {
           No open access journals provided by this provider
         </p>
       )}
-      {data?.results.length > 0 &&
+      {data?.results?.length > 0 &&
         data?.results.map((journal) => {
           return (
             <JournalCard
+              key={journal.id ?? journal.display_name}
               display_name={journal.display_name}
               issn_l={journal.issn_l}
               works_count={journal.works_count}

@@ -29,7 +29,7 @@ export default function Navbar() {
               className={`${location.pathname === "/journals" ? "active" : ""}`}
               to="/journals"
             >
-              Journals
+              Field-wise journals
             </Link>
           </div>
           <div>
@@ -37,7 +37,7 @@ export default function Navbar() {
               className={`${location.pathname === "/providers" ? "active" : ""}`}
               to="/providers"
             >
-              Providers
+              Publisher-wise journals
             </Link>
           </div>
         </div>
