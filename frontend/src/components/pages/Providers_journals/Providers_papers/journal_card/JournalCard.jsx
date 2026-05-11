@@ -3,6 +3,7 @@ import "./JournalCard.css";
 
 export default function JournalCard({
   display_name,
+  searchTerm = "",
   issn_l,
   works_count,
   cited_by_count,
@@ -11,12 +12,43 @@ export default function JournalCard({
   homepage_url,
   is_oa,
 }) {
-  const summaryStatsList = Object.entries(summary_stats ?? {});
+  const twoYearMeanCitedness = summary_stats?.["2yr_mean_citedness"];
+  const hIndex = summary_stats?.h_index;
+  const i10Index = summary_stats?.i10_index;
+
+  const renderHighlightedTitle = () => {
+    const title = display_name || "Untitled";
+    const term = searchTerm.trim();
+
+    if (!term) {
+      return title;
+    }
+
+    const lowerTitle = title.toLowerCase();
+    const lowerTerm = term.toLowerCase();
+    const matchIndex = lowerTitle.indexOf(lowerTerm);
+
+    if (matchIndex === -1) {
+      return title;
+    }
+
+    const beforeMatch = title.slice(0, matchIndex);
+    const matchedText = title.slice(matchIndex, matchIndex + term.length);
+    const afterMatch = title.slice(matchIndex + term.length);
+
+    return (
+      <>
+        {beforeMatch}
+        <span className="journal-title-highlight">{matchedText}</span>
+        {afterMatch}
+      </>
+    );
+  };
 
   return (
     <div className="journal-card">
       <div className="journal-card-header">
-        <h4 className="journal-card-title">{display_name || "Untitled"}</h4>
+        <span className="journal-card-title">{renderHighlightedTitle()}</span>
         <span className="open-access-status-badge">
           {is_oa ? (
             <img src="/media/check.png" alt="yes-open-access" />
@@ -27,42 +59,56 @@ export default function JournalCard({
       </div>
 
       <div className="journal-card-body">
-        <div className="journal-card-row">
-          <span className="journal-card-label">ISSN</span>
-          <span className="journal-card-value">
-            {issn_l || "Not available"}
-          </span>
-        </div>
-
-        <div className="journal-card-row">
-          <span className="journal-card-label">Works count</span>
-          <span className="journal-card-value">{works_count ?? 0}</span>
-        </div>
-
-        <div className="journal-card-row">
-          <span className="journal-card-label">Cited by</span>
-          <span className="journal-card-value">{cited_by_count ?? 0}</span>
-        </div>
-
-        <div className="journal-card-row">
-          <span className="journal-card-label">APC USD</span>
-          <span className="journal-card-value">
-            {apc_usd ? <span>&#36; {apc_usd}</span> : "Not available"}
-          </span>
-        </div>
+        <table className="journal-card-table">
+          <tbody>
+            <tr>
+              <td className="journal-card-label">ISSN :</td>
+              <td className="journal-card-value">
+                {issn_l || "Not available"}
+              </td>
+            </tr>
+            <tr>
+              <td className="journal-card-label">Works count :</td>
+              <td className="journal-card-value">{works_count ?? 0}</td>
+            </tr>
+            <tr>
+              <td className="journal-card-label">Cited by :</td>
+              <td className="journal-card-value">{cited_by_count ?? 0}</td>
+            </tr>
+            <tr>
+              <td className="journal-card-label">
+                Article Processing charge :
+              </td>
+              <td className="journal-card-value">
+                {apc_usd ? <span>&#36; {apc_usd}</span> : "Not available"}
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
         <div className="journal-card-section">
-          <div className="journal-card-subtitle">Summary stats</div>
-          {summaryStatsList.length > 0 ? (
+          {twoYearMeanCitedness !== undefined ||
+          hIndex !== undefined ||
+          i10Index !== undefined ? (
             <div className="journal-summary-list">
-              {summaryStatsList.map(([key, value]) => (
-                <div className="journal-summary-item" key={key}>
-                  <span className="journal-card-label">{key}</span>
-                  <span className="journal-card-value">
-                    {typeof value === "object" ? JSON.stringify(value) : value}
-                  </span>
-                </div>
-              ))}
+              <div className="journal-summary-item">
+                <span className="journal-card-label">Influence :</span>
+                <span className="journal-card-value journal-card-value-italic">
+                  {twoYearMeanCitedness ?? "-"}
+                </span>
+              </div>
+              <div className="journal-summary-item">
+                <span className="journal-card-label">Impact score :</span>
+                <span className="journal-card-value journal-card-value-italic">
+                  {hIndex ?? "-"}
+                </span>
+              </div>
+              <div className="journal-summary-item">
+                <span className="journal-card-label">Cited papers :</span>
+                <span className="journal-card-value journal-card-value-italic">
+                  {i10Index ?? "-"}
+                </span>
+              </div>
             </div>
           ) : (
             <p className="journal-card-empty">No summary stats available.</p>

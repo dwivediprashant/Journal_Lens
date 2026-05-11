@@ -4,6 +4,7 @@ import apiClient from "../../../configs/apiClient";
 import { useQuery } from "@tanstack/react-query";
 import ProgressBarLoader from "../../loaders/ProgressBarLoader";
 import { useAuth } from "@clerk/react";
+import { getCompanyLogoByName } from "../../utils/CompanyLogo";
 
 import CountsByYear from "../../CountsByYear/CountsByYear";
 import ProvidersPaper from "./Providers_papers/ProvidersPaper";
@@ -11,6 +12,8 @@ import ProvidersPaper from "./Providers_papers/ProvidersPaper";
 export default function ProvidersJournals() {
   const [page, setPage] = useState(1);
   const [selectedPublisher, setSelectedPublisher] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [journalSearchTerm, setJournalSearchTerm] = useState("");
   const { getToken } = useAuth();
 
   const fetchProviders = async ({ queryKey }) => {
@@ -49,12 +52,14 @@ export default function ProvidersJournals() {
     Math.ceil((data?.meta?.count ?? 0) / (data?.meta?.per_page ?? 25)) || 1;
 
   const handlePrevClick = () => {
+    setSearchTerm("");
     if (currentPage > 1) {
       setPage(currentPage - 1);
     }
   };
 
   const handleNextClick = () => {
+    setSearchTerm("");
     if (currentPage < totalPages) {
       setPage(currentPage + 1);
     }
@@ -64,15 +69,57 @@ export default function ProvidersJournals() {
     setSelectedPublisher(publisher);
   };
 
-  const summaryStats = selectedPublisher?.summary_stats ?? {};
-  const summaryStatsList = Object.entries(summaryStats);
   const countsByYear = selectedPublisher?.counts_by_year ?? [];
+  let logoUrl = selectedPublisher
+    ? getCompanyLogoByName({ name: selectedPublisher.display_name })
+    : undefined;
   const selectedPublisherImage =
     selectedPublisher?.image_thumbnail_url ??
     selectedPublisher?.image_url ??
-    "/media/publishers/openalex.png";
+    logoUrl ??
+    "/media/fields/thinking.png";
 
-  const selectedPublisherId = selectedPublisher?.id.split("/").pop();
+  const twoYearMeanCitedness =
+    selectedPublisher?.summary_stats?.["2yr_mean_citedness"];
+  const hIndex = selectedPublisher?.summary_stats?.h_index;
+  const i10Index = selectedPublisher?.summary_stats?.i10_index;
+
+  const selectedPublisherId = selectedPublisher?.id?.split("/").pop();
+  const filteredProviders = (data?.results ?? []).filter((publisher) =>
+    (publisher?.display_name ?? "")
+      .toLowerCase()
+      .includes(searchTerm.trim().toLowerCase()),
+  );
+
+  const renderHighlightedProviderName = (displayName) => {
+    const name = displayName || "Untitled";
+    const term = searchTerm.trim();
+
+    if (!term) {
+      return name;
+    }
+
+    const lowerName = name.toLowerCase();
+    const lowerTerm = term.toLowerCase();
+    const matchIndex = lowerName.indexOf(lowerTerm);
+
+    if (matchIndex === -1) {
+      return name;
+    }
+
+    const beforeMatch = name.slice(0, matchIndex);
+    const matchedText = name.slice(matchIndex, matchIndex + term.length);
+    const afterMatch = name.slice(matchIndex + term.length);
+
+    return (
+      <>
+        {beforeMatch}
+        <span className="provider-title-highlight">{matchedText}</span>
+        {afterMatch}
+      </>
+    );
+  };
+
   return (
     <div className="providers-page">
       <div className="providers-controls">
@@ -98,6 +145,16 @@ export default function ProvidersJournals() {
         </div>
       </div>
 
+      <div className="providers-search-wrap">
+        <input
+          type="text"
+          className="providers-search-input"
+          placeholder="Type journal name"
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+      </div>
+
       {(isLoading || isFetching) && (
         <div className="providers-loader">
           <ProgressBarLoader />
@@ -110,29 +167,46 @@ export default function ProvidersJournals() {
             className="providers-carousel"
             aria-label="Publisher profile cards"
           >
-            {data?.results?.map((publisher, idx) => {
-              const imageSrc =
-                publisher?.image_thumbnail_url ??
-                publisher?.image_url ??
-                "/media/publishers/openalex.png";
+            {filteredProviders.length > 0 ? (
+              filteredProviders.map((publisher, idx) => {
+                const logoUrl2 = getCompanyLogoByName({
+                  name: publisher?.display_name,
+                });
+                const imageSrc =
+                  publisher?.image_thumbnail_url ??
+                  publisher?.image_url ??
+                  logoUrl2 ??
+                  "/media/publishers/openalex.png";
 
-              return (
-                <div
-                  className={`publisher-card ${
-                    selectedPublisher?.id === publisher?.id ? "active" : ""
-                  }`}
-                  key={idx}
-                  onClick={() => handlePublisherCardClick(publisher)}
-                >
-                  <div className="publisher-card-image">
-                    <img src={imageSrc} alt={publisher?.display_name} />
+                return (
+                  <div
+                    className={`publisher-card ${
+                      selectedPublisher?.id === publisher?.id ? "active" : ""
+                    }`}
+                    key={idx}
+                    onClick={() => handlePublisherCardClick(publisher)}
+                  >
+                    <div className="publisher-card-image">
+                      <img src={imageSrc} alt={publisher?.display_name} />
+                    </div>
+                    <div className="publisher-card-title">
+                      {renderHighlightedProviderName(publisher?.display_name)}
+                    </div>
                   </div>
-                  <div className="publisher-card-title">
-                    {publisher?.display_name}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <div className="fallback-image">
+                <img
+                  src="/media/fields/thinking.png"
+                  alt="No matched journals"
+                />
+                <p className="italic text-red-600">
+                  No matching journal found in this page use PREV and NEXT
+                  button at top !
+                </p>
+              </div>
+            )}
           </div>
           {!selectedPublisher && (
             <div className="fallback-image">
@@ -175,13 +249,23 @@ export default function ProvidersJournals() {
                           </div>
 
                           <div className="summary-stats-list">
-                            {summaryStatsList.length > 0 ? (
-                              summaryStatsList.map(([key, value]) => (
-                                <div className="summary-stats-item" key={key}>
-                                  <span>{key} : </span>&nbsp;
-                                  <strong>{value}</strong>
+                            {twoYearMeanCitedness !== undefined ||
+                            hIndex !== undefined ||
+                            i10Index !== undefined ? (
+                              <>
+                                <div className="summary-stats-item">
+                                  <span>Influence :</span>&nbsp;
+                                  <strong>{twoYearMeanCitedness ?? "-"}</strong>
                                 </div>
-                              ))
+                                <div className="summary-stats-item">
+                                  <span>Impact score :</span>&nbsp;
+                                  <strong>{hIndex ?? "-"}</strong>
+                                </div>
+                                <div className="summary-stats-item">
+                                  <span>Cited papers :</span>&nbsp;
+                                  <strong>{i10Index ?? "-"}</strong>
+                                </div>
+                              </>
                             ) : (
                               <p>No summary stats available.</p>
                             )}
@@ -189,15 +273,29 @@ export default function ProvidersJournals() {
                         </div>
                       </div>
                     </div>
-                    <h4 className="text-2xl font-semibold m-4">
-                      Journals under &nbsp;
-                      <span className="text-red-800 italic">
-                        {selectedPublisher.display_name}
-                      </span>
-                    </h4>
                     <div className="provider-papers-wrapper">
                       <div className="provider-papers ">
-                        <ProvidersPaper providerId={selectedPublisherId} />
+                        <div className="provider-papers-header">
+                          <h4 className="provider-papers-title">
+                            Journals under&nbsp;
+                            <span className="text-red-800 italic">
+                              {selectedPublisher.display_name}
+                            </span>
+                          </h4>
+                          <input
+                            type="text"
+                            className="provider-papers-search-input"
+                            placeholder="Type journal name"
+                            value={journalSearchTerm}
+                            onChange={(event) =>
+                              setJournalSearchTerm(event.target.value)
+                            }
+                          />
+                        </div>
+                        <ProvidersPaper
+                          providerId={selectedPublisherId}
+                          searchTerm={journalSearchTerm}
+                        />
                       </div>
                       <div className="provider-counts-block">
                         <h4 className="underline m-3 text-xl underline-offset-4">

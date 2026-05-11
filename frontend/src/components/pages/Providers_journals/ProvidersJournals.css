@@ -30,6 +30,25 @@
   color: white;
 }
 
+.providers-search-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 2rem 1rem;
+}
+
+.providers-search-input {
+  width: min(100%, 28rem);
+  border: 1px solid #94a3b8;
+  background: #f8fafc;
+  color: #0f172a;
+  padding: 0.7rem 0.9rem;
+  outline: none;
+}
+
+.providers-search-input::placeholder {
+  color: #64748b;
+}
+
 .providers-loader {
   display: flex;
   justify-content: center;
@@ -210,6 +229,13 @@
   justify-content: center;
 }
 
+.provider-title-highlight {
+  background: #fde68a;
+  color: #0f172a;
+  padding: 0 0.15rem;
+  border-radius: 0.1rem;
+}
+
 .provider-papers {
   display: grid;
   grid-template-columns: 1fr;
@@ -222,9 +248,38 @@
   justify-content: space-evenly;
   align-items: start;
 }
+
+.providers-empty-state {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.25rem 0;
+}
+
+.providers-empty-state img {
+  width: min(100%, 18rem);
+  height: auto;
+  object-fit: contain;
+}
+
+.providers-empty-state p {
+  margin: 0;
+}
+
+.fallback-image img {
+  width: 170px;
+  height: 170px;
+}
 @media (max-width: 900px) {
   .providers-layout {
     grid-template-columns: 1fr;
+  }
+
+  .providers-search-wrap {
+    margin: 0 0 1rem;
   }
 
   .provider-journals-panel {

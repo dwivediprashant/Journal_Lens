@@ -1,3 +1,68 @@
 .progress-loader {
   background-color: transparent;
 }
+
+.provider-papers-search-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.provider-papers-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  margin-top: 1rem;
+}
+
+.provider-papers-title {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.provider-papers-search-bar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.provider-papers-search-input {
+  width: min(100%, 22rem);
+  border: 1px solid #94a3b8;
+  background: #f8fafc;
+  color: #0f172a;
+  padding: 0.65rem 0.85rem;
+  outline: none;
+}
+
+.provider-papers-search-input::placeholder {
+  color: #64748b;
+}
+
+.provider-papers-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 0;
+}
+
+.provider-papers-empty-state img {
+  width: min(100%, 16rem);
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .provider-papers-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .provider-papers-search-input {
+    width: 100%;
+  }
+}

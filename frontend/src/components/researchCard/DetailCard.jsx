@@ -1,6 +1,6 @@
 import "./DetailCard.css";
 import ParseAbstract from "../utils/ParseAbstract";
-import getCompanyLogo from "../utils/CompanyLogo";
+import { getCompanyLogo } from "../utils/CompanyLogo";
 import { useNavigate, useParams } from "react-router";
 import React from "react";
 
