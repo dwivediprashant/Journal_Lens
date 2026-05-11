@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import apiClient from "../../../../configs/apiClient";
 import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -11,6 +11,7 @@ import ProvidersPaper from "../Providers_papers/ProvidersPaper";
 export default function ProvidersJournalFromHome() {
   const { id } = useParams();
   const { getToken } = useAuth();
+  const [journalSearchTerm, setJournalSearchTerm] = useState("");
 
   const fetchProvider = async ({ queryKey }) => {
     const [, providerId] = queryKey;
@@ -44,7 +45,9 @@ export default function ProvidersJournalFromHome() {
     data?.image_thumbnail_url ??
     data?.image_url ??
     "/media/publishers/openalex.png";
-  const summaryStatsList = Object.entries(data?.summary_stats ?? {});
+  const twoYearMeanCitedness = data?.summary_stats?.["2yr_mean_citedness"];
+  const hIndex = data?.summary_stats?.h_index;
+  const i10Index = data?.summary_stats?.i10_index;
   const countsByYear = data?.counts_by_year ?? [];
 
   return (
@@ -81,13 +84,23 @@ export default function ProvidersJournalFromHome() {
                       </div>
 
                       <div className="summary-stats-list">
-                        {summaryStatsList.length > 0 ? (
-                          summaryStatsList.map(([key, value]) => (
-                            <div className="summary-stats-item" key={key}>
-                              <span>{key} : </span>&nbsp;
-                              <strong>{value}</strong>
+                        {twoYearMeanCitedness !== undefined ||
+                        hIndex !== undefined ||
+                        i10Index !== undefined ? (
+                          <>
+                            <div className="summary-stats-item">
+                              <span>Influence :</span>&nbsp;
+                              <strong>{twoYearMeanCitedness ?? "-"}</strong>
                             </div>
-                          ))
+                            <div className="summary-stats-item">
+                              <span>Impact score :</span>&nbsp;
+                              <strong>{hIndex ?? "-"}</strong>
+                            </div>
+                            <div className="summary-stats-item">
+                              <span>Cited papers :</span>&nbsp;
+                              <strong>{i10Index ?? "-"}</strong>
+                            </div>
+                          </>
                         ) : (
                           <p>No summary stats available.</p>
                         )}
@@ -98,13 +111,27 @@ export default function ProvidersJournalFromHome() {
 
                 <div className="provider-papers-wrapper">
                   <div className="provider-papers">
-                    <h4 className="text-2xl font-semibold m-4">
-                      Journals under &nbsp;
-                      <span className="text-red-800 italic">
-                        {data?.display_name}
-                      </span>
-                    </h4>
-                    <ProvidersPaper providerId={id} />
+                    <div className="provider-papers-header">
+                      <h4 className="provider-papers-title">
+                        Journals under&nbsp;
+                        <span className="text-red-800 italic">
+                          {data?.display_name}
+                        </span>
+                      </h4>
+                      <input
+                        type="text"
+                        className="provider-papers-search-input"
+                        placeholder="Type journal name"
+                        value={journalSearchTerm}
+                        onChange={(event) =>
+                          setJournalSearchTerm(event.target.value)
+                        }
+                      />
+                    </div>
+                    <ProvidersPaper
+                      providerId={id}
+                      searchTerm={journalSearchTerm}
+                    />
                   </div>
 
                   <div className="provider-counts-block">

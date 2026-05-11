@@ -99,13 +99,8 @@ export default function Footer() {
               </div>
             </div>
             <div className="footer-logo">
-              <a
-                href="https://lnct.ac.in/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img src="/media/lnct.png" alt="" />
-              </a>
+              <img src="/media/IdeaLab.png" alt="" />
+              <img src="/media/lnct.png" alt="" />
             </div>
           </div>
         </div>
