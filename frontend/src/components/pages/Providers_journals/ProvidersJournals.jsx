@@ -277,9 +277,8 @@ export default function ProvidersJournals() {
                       <div className="provider-papers ">
                         <div className="provider-papers-header">
                           <h4 className="provider-papers-title">
-                            Journals under&nbsp;
                             <span className="text-red-800 italic">
-                              {selectedPublisher.display_name}
+                              Journals list
                             </span>
                           </h4>
                           <input
