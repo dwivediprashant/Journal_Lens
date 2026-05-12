@@ -14,7 +14,7 @@ export default function CustomJournal() {
   const query = searchVal.trim();
   const searchQuery = useQuery({
     queryKey: ["custom-search-papers", pageNum, submittedQuery],
-    queryFn: () => callResearchApi(pageNum, submittedQuery),
+    queryFn: () => callResearchApi(pageNum, "", submittedQuery),
     enabled: hasSearched && !!submittedQuery,
     staleTime: 24 * 60 * 60 * 1000,
     gcTime: 24 * 60 * 60 * 1000,
@@ -74,7 +74,7 @@ export default function CustomJournal() {
             </div>
           ) : data?.length > 0 ? (
             <div className="detailcard-main">
-              <div className="pagination-btn ms-auto">
+              <div className="pagination-btn ms-auto w-[85%]">
                 <button
                   className={`prev-btn ${pageNum === 1 ? "disabled" : ""}`}
                   disabled={pageNum === 1 || searchQuery.isFetching}
@@ -91,7 +91,7 @@ export default function CustomJournal() {
                 </button>
               </div>
 
-              <div className="detailcard-container">
+              <div className="detailcard-container max-w-[85%]">
                 {data.map((paper, index) => (
                   <DetailCard key={paper?.id ?? index} paper={paper} />
                 ))}

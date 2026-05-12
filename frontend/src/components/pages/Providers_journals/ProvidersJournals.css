@@ -104,7 +104,12 @@
   border: 1px solid rgba(148, 163, 184, 0.24);
   background: #fff;
 }
-
+.provider-papers-header {
+  background-color: rgba(101, 101, 221, 0.418);
+  /* margin-bottom: 2rem; */
+  /* position: sticky;
+  top: 0; */
+}
 .provider-info-content {
   flex: 1;
   padding-top: 4px;
@@ -141,6 +146,12 @@
   padding: 0.5rem;
   color: white;
   width: 30%;
+  height: 100vh;
+  overflow: scroll;
+}
+
+.provider-counts-block {
+  overflow-x: hidden;
 }
 
 .summary-stats-list {
@@ -242,6 +253,11 @@
   border-right: 0.05px dashed black;
   padding: 0 1rem 0 0;
   width: 50%;
+  max-height: 100vh;
+  overflow: scroll;
+}
+.provider-papers {
+  overflow-x: hidden;
 }
 .provider-papers-wrapper {
   display: flex;

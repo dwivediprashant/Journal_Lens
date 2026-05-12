@@ -277,13 +277,11 @@ export default function ProvidersJournals() {
                       <div className="provider-papers ">
                         <div className="provider-papers-header">
                           <h4 className="provider-papers-title">
-                            <span className="text-red-800 italic">
-                              Journals list
-                            </span>
+                            <span className="ms-3 italic">Journals list</span>
                           </h4>
                           <input
                             type="text"
-                            className="provider-papers-search-input"
+                            className="provider-papers-search-input ms-3"
                             placeholder="Type journal name"
                             value={journalSearchTerm}
                             onChange={(event) =>

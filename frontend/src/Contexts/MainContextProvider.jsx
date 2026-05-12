@@ -9,9 +9,12 @@ export default function MainContextProvider({ children }) {
     try {
       const token = await getToken();
       const params = {
-        field,
         pageNum,
       };
+
+      if (field && field.length > 0) {
+        params.field = field;
+      }
 
       if (issnId && issnId.length > 0) {
         params.issnId = issnId;
