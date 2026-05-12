@@ -11,32 +11,36 @@ router.use(requireAuth);
 //1. GET  /api/researchpapers/
 
 router.get("/", async (req, res) => {
-  const { field, pageNum, authorId } = req.query;
+  const { field, pageNum, issnId, authorId } = req.query;
 
-  if (!field || !pageNum) {
-    return res
-      .status(400)
-      .json({ success: false, error: "Field or Page number missing !" });
+  if (!pageNum) {
+    return res.status(400).json({ success: false, error: error.message });
   }
   try {
     let data = null;
     let filterString = "type:article,open_access.is_oa:true";
 
+    if (issnId && issnId.length > 0) {
+      filterString += `,primary_location.source.issn:${issnId}`;
+    }
+
     if (authorId && authorId.length > 0) {
       filterString += `,author.id:${authorId}`;
     }
 
-    const response = await axios.get(`${OPENALEX_BASE_URL}/works`, {
-      params: {
-        filter: filterString,
-        search: field,
-        select:
-          "display_name,authorships,publication_year,primary_location,open_access,cited_by_count,primary_topic,abstract_inverted_index",
-        per_page: 10,
-        api_key: OPENALEX_API_KEY,
-        page: pageNum,
-      },
-    });
+    const params = {
+      filter: filterString,
+      select:
+        "display_name,authorships,publication_year,primary_location,open_access,cited_by_count,primary_topic,abstract_inverted_index",
+      per_page: 10,
+      page: pageNum,
+      api_key: OPENALEX_API_KEY,
+    };
+
+    if (field && field.length > 0) {
+      params.search = field;
+    }
+    const response = await axios.get(`${OPENALEX_BASE_URL}/works`, { params });
 
     data = response.data;
 
