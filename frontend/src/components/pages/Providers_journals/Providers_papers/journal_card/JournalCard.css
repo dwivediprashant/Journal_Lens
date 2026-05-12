@@ -131,12 +131,14 @@
   text-decoration: none;
   padding: 0.2rem 0;
   font-size: 0.85rem;
+  cursor: pointer;
 }
 
 .journal-card-empty {
   margin: 0;
   color: #64748b;
   font-size: 0.85rem;
+  cursor: not-allowed;
 }
 
 .journal-card-link:hover {

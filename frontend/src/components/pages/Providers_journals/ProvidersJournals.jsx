@@ -167,46 +167,46 @@ export default function ProvidersJournals() {
             className="providers-carousel"
             aria-label="Publisher profile cards"
           >
-            {filteredProviders.length > 0 ? (
-              filteredProviders.map((publisher, idx) => {
-                const logoUrl2 = getCompanyLogoByName({
-                  name: publisher?.display_name,
-                });
-                const imageSrc =
-                  publisher?.image_thumbnail_url ??
-                  publisher?.image_url ??
-                  logoUrl2 ??
-                  "/media/publishers/openalex.png";
+            {filteredProviders && filteredProviders.length > 0
+              ? filteredProviders.map((publisher, idx) => {
+                  const logoUrl2 = getCompanyLogoByName({
+                    name: publisher?.display_name,
+                  });
+                  const imageSrc =
+                    publisher?.image_thumbnail_url ??
+                    publisher?.image_url ??
+                    logoUrl2 ??
+                    "/media/publishers/openalex.png";
 
-                return (
-                  <div
-                    className={`publisher-card ${
-                      selectedPublisher?.id === publisher?.id ? "active" : ""
-                    }`}
-                    key={idx}
-                    onClick={() => handlePublisherCardClick(publisher)}
-                  >
-                    <div className="publisher-card-image">
-                      <img src={imageSrc} alt={publisher?.display_name} />
+                  return (
+                    <div
+                      className={`publisher-card ${
+                        selectedPublisher?.id === publisher?.id ? "active" : ""
+                      }`}
+                      key={idx}
+                      onClick={() => handlePublisherCardClick(publisher)}
+                    >
+                      <div className="publisher-card-image">
+                        <img src={imageSrc} alt={publisher?.display_name} />
+                      </div>
+                      <div className="publisher-card-title">
+                        {renderHighlightedProviderName(publisher?.display_name)}
+                      </div>
                     </div>
-                    <div className="publisher-card-title">
-                      {renderHighlightedProviderName(publisher?.display_name)}
-                    </div>
+                  );
+                })
+              : journalSearchTerm && (
+                  <div className="fallback-image">
+                    <img
+                      src="/media/fields/thinking.png"
+                      alt="No matched journals"
+                    />
+                    <p className="italic text-red-600">
+                      No matching journal found in this page use PREV and NEXT
+                      button at top !
+                    </p>
                   </div>
-                );
-              })
-            ) : (
-              <div className="fallback-image">
-                <img
-                  src="/media/fields/thinking.png"
-                  alt="No matched journals"
-                />
-                <p className="italic text-red-600">
-                  No matching journal found in this page use PREV and NEXT
-                  button at top !
-                </p>
-              </div>
-            )}
+                )}
           </div>
           {!selectedPublisher && (
             <div className="fallback-image">

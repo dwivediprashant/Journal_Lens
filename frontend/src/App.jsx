@@ -15,6 +15,7 @@ import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { ScrollIndicator } from "react-scroll-progress-tracker";
 import ProvidersJournals from "./components/pages/Providers_journals/ProvidersJournals";
 import ProvidersJournalFromHome from "./components/pages/Providers_journals/providers_journal_from_home/ProvidersJournalFromHome";
+import ISSNPapers from "./components/pages/issn_filtered_papers/ISSNPapers";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -72,6 +73,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ProvidersJournalFromHome />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/providers/seepapers/:issnId"
+          element={
+            <ProtectedRoute>
+              <ISSNPapers />
             </ProtectedRoute>
           }
         />

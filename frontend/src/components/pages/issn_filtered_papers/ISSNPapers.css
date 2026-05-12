@@ -1,0 +1,14 @@
+.issn-paper-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.head-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 2rem;
+  padding: 1.5rem 0 1.5rem 0;
+  background-color: aliceblue;
+}

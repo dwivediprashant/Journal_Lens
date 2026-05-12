@@ -12,7 +12,14 @@
 }
 .detail-img img {
   height: 20rem;
-  /* width: 100%; */
+}
+.list-outer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.list-wrapper {
+  width: 70%;
 }
 .list {
   display: flex;

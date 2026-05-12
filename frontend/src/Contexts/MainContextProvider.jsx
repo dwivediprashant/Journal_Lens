@@ -5,7 +5,7 @@ import { useAuth } from "@clerk/react";
 export default function MainContextProvider({ children }) {
   const { getToken } = useAuth();
   //research api call with optional authorId
-  const callResearchApi = async (pageNum, field, authorId = "") => {
+  const callResearchApi = async (pageNum, issnId, field, authorId = "") => {
     try {
       const token = await getToken();
       const params = {
@@ -13,6 +13,9 @@ export default function MainContextProvider({ children }) {
         pageNum,
       };
 
+      if (issnId && issnId.length > 0) {
+        params.issnId = issnId;
+      }
       if (authorId && authorId.length > 0) {
         params.authorId = authorId;
       }
