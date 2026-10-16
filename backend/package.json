@@ -24,13 +24,18 @@
   },
   "dependencies": {
     "@clerk/express": "^2.1.12",
+    "@langchain/core": "^1.1.46",
+    "@langchain/google-genai": "^2.1.30",
     "axios": "^1.15.2",
     "cors": "^2.8.6",
+    "deepagents": "^1.10.2",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "groq-sdk": "^1.1.2",
+    "langchain": "^1.4.0",
     "mongoose": "^9.4.1",
     "node-fetch": "^3.3.2",
-    "pdf-parse": "^2.4.5"
+    "pdf-parse": "^2.4.5",
+    "zod": "^4.4.3"
   }
 }

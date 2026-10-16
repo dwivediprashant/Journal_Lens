@@ -40,6 +40,15 @@ export default function Navbar() {
               Publisher-wise journals
             </Link>
           </div>
+          <div>
+            <Link
+              className={`${location.pathname === "/journal-finder" ? "active" : ""}`}
+              to="/journal-finder"
+            >
+              AI finder
+            </Link>
+            <i className="fa-solid fa-robot ml-2"></i>
+          </div>
         </div>
       </div>
       <div className="right ms-auto flex mr-4">

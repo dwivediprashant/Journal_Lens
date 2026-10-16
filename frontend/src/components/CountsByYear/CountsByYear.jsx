@@ -4,9 +4,9 @@ import "./CountsByYear.css";
 export default function CountsByYear({ countsByYear }) {
   return (
     <div className="count-by-year-wrapper">
-      {countsByYear?.map((year) => {
+      {countsByYear?.map((year, idx) => {
         return (
-          <div className="year-info-card">
+          <div key={idx} className="year-info-card">
             <p>
               <span className="label">Year :</span> {year?.year}
             </p>
