@@ -9,12 +9,6 @@ import { useQuery } from "@tanstack/react-query";
 
 const PER_PAGE = 10;
 
-function fmt(n) {
-  if (n === null || n === undefined || n === "") return "-";
-  const num = Number(n);
-  return Number.isNaN(num) ? String(n) : num.toLocaleString("en-US");
-}
-
 // Backend returns { endpoint, count, papers, page, perPage, totalPages, plan }
 // plus legacy aiResponse string. Normalise every shape.
 function parsePayload(data, fallbackPage) {
@@ -162,34 +156,11 @@ export default function JournalFinder() {
       return parsed;
     },
     enabled: !!submittedQuery,
-    staleTime: 0,
-    gcTime: 0,
   });
 
   const result = searchQuery.data || null;
   const error = submitError || (searchQuery.isError ? searchQuery.error?.response?.data?.error || searchQuery.error?.message || "Request failed." : "");
   const loader = searchQuery.isLoading || searchQuery.isFetching;
-
-  // Small-count requests (e.g. "5 papers"): single fetch, no pagination.
-  const perPage = result?.perPage ?? PER_PAGE;
-  const backendTotalPages = result?.totalPages ?? 1;
-  // When user asked for N papers, cap navigation at ceil(N / perPage) pages
-  // instead of OpenAlex's total match count (which can be 99k+).
-  const maxWantedPages =
-    result?.totalWanted != null ? Math.max(1, Math.ceil(result.totalWanted / perPage)) : null;
-  const totalPages = maxWantedPages != null ? Math.min(backendTotalPages, maxWantedPages) : backendTotalPages;
-  const showPagination = result?.papers && !result?.raw && totalPages > 1 && !(result.totalWanted && result.totalWanted <= PER_PAGE);
-
-  const handlePrev = () => {
-    if (pageNum <= 1 || searchQuery.isFetching) return;
-    setPageNum((p) => Math.max(1, p - 1));
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-  const handleNext = () => {
-    if (pageNum >= totalPages || searchQuery.isFetching) return;
-    setPageNum((p) => p + 1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   return (
     <div className={styles["journal-finder"]}>
@@ -234,29 +205,6 @@ export default function JournalFinder() {
                 </div>
               )}
             </div>
-            {showPagination && (
-              <div className="flex items-center justify-center gap-4 bg-white rounded-lg border border-gray-200 px-4 py-2">
-                <button
-                  onClick={handlePrev}
-                  disabled={pageNum <= 1 || searchQuery.isFetching}
-                  className={`px-4 py-1.5 rounded-md text-sm font-semibold ${pageNum <= 1 ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "bg-blue-800 text-white hover:bg-blue-900"}`}
-                >
-                  <i className="fa-solid fa-chevron-left"></i> Prev
-                </button>
-                <span className="text-sm text-gray-600">
-                  Page <span className="font-semibold text-blue-800">{pageNum}</span> of{" "}
-                  <span className="font-semibold">{fmt(totalPages)}</span>
-                  {searchQuery.isFetching && <span className="italic text-gray-400"> (loading...)</span>}
-                </span>
-                <button
-                  onClick={handleNext}
-                  disabled={pageNum >= totalPages || searchQuery.isFetching}
-                  className={`px-4 py-1.5 rounded-md text-sm font-semibold ${pageNum >= totalPages ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "bg-blue-800 text-white hover:bg-blue-900"}`}
-                >
-                  Next <i className="fa-solid fa-chevron-right"></i>
-                </button>
-              </div>
-            )}
           </div>
         ) : result?.raw ? (
           <div className="bg-white rounded-lg border border-gray-200 p-4 w-full">
